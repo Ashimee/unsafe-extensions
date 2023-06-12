@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TurboWarp Extension Gallery</title>
     <meta name="theme-color" content="#ff4c4c">
-    <meta name="description" content="The official place to find powerful unsandboxed extensions for TurboWarp.">
+    <meta name="description" content="A place to find extensions that are unable to make it into the extension gallery.">
     <style>
       :root {
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -222,24 +222,9 @@
 
       <div class="infobox infobox-warning">
         <div class="infobox-title">These extensions are not compatible with Scratch.</div>
-        Projects that use these extensions can't be uploaded to the Scratch website.
-        They can, however, be used in <a href="https://packager.turbowarp.org/">the packager</a>.
+        Projects that use these extensions can't be uploaded to the Scratch website or Loaded directly into turbowarp.
+        They can, however, be used in <a href="https://packager.turbowarp.org/">the packager</a> and sideloaders like <a href="#">TWunlocked</a>.
       </div>
-
-      <div class="infobox">
-        <% if (mode === 'desktop') { %>
-          <div class="infobox-title">Some extensions may be outdated or missing.</div>
-          <%
-            const now = new Date();
-            const date = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
-          %>
-          None of these extensions will work in the desktop app.
-        <% } else { %>
-          <div class="infobox-title">All extensions will not work in TurboWarp Desktop.</div>
-          None of these extensions will work in the desktop app.
-        <% } %>
-      </div>
-    </div>
 
     <%
     const getLinkToRun = (extensionPath) => `https://turbowarp.org/editor?extension=${host}${extensionPath}`;
