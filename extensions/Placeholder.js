@@ -3,7 +3,7 @@
     class site_placeholder {
       getInfo() {
         return {
-          id: 'site_placeholder(',
+          id: 'sitePlaceholder',
           name: 'Placeholder',
           blocks: [
             {
