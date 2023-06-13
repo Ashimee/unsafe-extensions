@@ -1,9 +1,6 @@
-# TurboWarp Extension Gallery
+# Unofficial gallery/
 
-User-contributed unsandboxed extension gallery for TurboWarp.
-
-https://extensions.turbowarp.org/
-
+For extensions that cant get on the official gallery.
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
