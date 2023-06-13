@@ -245,6 +245,7 @@
     <% } %>
 
     <script>
+      window.TWUextensionPage = true;
       document.addEventListener('click', function (e) {
         var toCopy = e.target.getAttribute('data-copy');
         if (toCopy) {
