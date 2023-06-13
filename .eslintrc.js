@@ -56,11 +56,11 @@ module.exports = {
     'no-template-curly-in-string': 'error',
     // Loops that only iterate once imply a mistake
     'no-unreachable-loop': 'error',
-    // Detect some untrusted code execution
-    'no-eval': 'error',
-    'no-implied-eval': 'error',
-    'no-new-func': 'error',
-    'no-script-url': 'error',
+    // REMOVED //  Detect some untrusted code execution
+    //  'no-eval': 'error',
+    //  'no-implied-eval': 'error',
+    //  'no-new-func': 'error',
+    //  'no-script-url': 'error',
     // Combinations of || and && are unreadable and may not do what you expect
     'no-mixed-operators': [
       'error',

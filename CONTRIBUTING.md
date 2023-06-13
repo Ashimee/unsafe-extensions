@@ -53,7 +53,6 @@ Extensions end up in one of these categories depending on various qualities:
 
  - Extensions that are in the repository, but not listed on the website
  - Extensions that are listed on the website
- - Extensions that are listed in the editor's builtin extension library
 
 ## Writing extensions
 
@@ -63,9 +62,9 @@ New extensions should be added in a user folder. You can name your folder your G
 
 Static resources go in the `website` folder. This is where some example resources used by extensions such as fetch are placed. It works similarly to the `extensions` folder.
 
-Extensions must not use `eval()`, `new Function()`, untrusted `<script>` or `<iframe>` tags, or similar arbitrary JS/CSS/HTML/etc.
+Extensions may use `eval()`, `new Function()`, untrusted `<script>` or `<iframe>` tags, or similar arbitrary JS/CSS/HTML/etc, if it is on the users behalf as it will only run if the user calls it.
 
-Extensions must be self-contained. All libraries and hardcoded resources it needs should be embedded into the extension's JavaScript file. If you include minified code, please link where to find the unminified code.
+Extensions should be self-contained. All libraries and hardcoded resources it needs should be embedded into the extension's JavaScript file. If you include minified code, please link where to find the unminified code, but if you cannot and have tried you dont have to embed the library.
 
 To add an extension to the website homepage, modify `website/index.ejs`. Copy one of the existing extensions. New extensions should usually be added to the end of the list.
 
