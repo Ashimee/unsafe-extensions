@@ -1,4 +1,4 @@
-# Unofficial gallery/
+# Unofficial gallery.
 
 For extensions that cant get on the official gallery.
 ## Contributing
