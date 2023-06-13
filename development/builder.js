@@ -160,7 +160,7 @@ class Builder {
 
     const ejsData = {
       mode: this.mode,
-      host: this.mode === 'development' ? 'http://localhost:8000/' : 'https://extensions.turbowarp.org/',
+      host: this.mode === 'development' ? 'http://localhost:8000/' : 'https://survexe1pc.github.io/unsafe-extensions/',
       mostRecentExtensions: mostRecentExtensions,
       extensionImages: images
     };
