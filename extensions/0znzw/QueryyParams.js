@@ -1,6 +1,6 @@
 /*!
  * VERSION 1.0
- * Originally created by https://scratch.mit.edu/users/0znzw/ | Licenced Under the MIT License
+ * Originally created by https://scratch.mit.edu/users/0znzw/ | Licensed Under the MIT License
  * DO NOT REMOVE THIS COMMENT
  */
 (function(Scratch) {
