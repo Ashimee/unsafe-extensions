@@ -15,7 +15,6 @@
     return {
       id: '0znzwQueryParams',
       name: 'Query Parameters',
-      docsURI: 'https://survexe1pc.github.io/0tils',
       color1: "#b4b4b4",
       color2: "#9c9c9c",
       color3: "#646464",
