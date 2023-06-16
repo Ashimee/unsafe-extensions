@@ -36,4 +36,4 @@
   }
   Scratch.extensions.register(new ProfaneCheck());
   })(Scratch);
-/* eslint-enable */  
+/* eslint-enable */
