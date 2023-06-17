@@ -111,7 +111,7 @@
     return decodeURIComponent(urlParams.get(name));
   }
   getAllParam({ name }) {
-    return urlParams.getAll(name);
+    return urlParams.getAll(JSON.stringify(name));
   }
   setParam({ name, value }) {
     urlParams.set(name, encodeURIComponent(value));
@@ -127,10 +127,18 @@
     return urlParams.sort();
   }
   getValues() {
-    return urlParams.values;
+    const values = [];
+    for (const value of urlParams.values()) {
+      values.push(value);
+    }
+    return JSON.stringify(values);
   }
   getKeys() {
-    return urlParams.keys;
+    const keys = [];
+    for (const key of urlParams.keys()) {
+      keys.push(key);
+    }
+    return JSON.stringify(keys);
   }
   refreshURI() {
     history.replaceState(null, "", "?" + urlParams.toString());
