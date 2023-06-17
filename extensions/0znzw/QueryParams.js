@@ -8,7 +8,7 @@
   if (!Scratch.extensions.unsandboxed) {
     throw new Error(`QueryParams must run unsandboxed`);
   }
-  const urlParams = new URLSearchParams(window.location.search);
+  var urlParams = new URLSearchParams(window.location.search);
   const vm = Scratch.vm;
   class QueryParams {
   getInfo() {
@@ -67,10 +67,13 @@
             }
         }
       }, {
+        disableMonitor: true,
+        hideFromPalette: true,
         opcode: 'sortParam',
         blockType: Scratch.BlockType.REPORTER,
         text: 'get sorted parameters'
       }, '---', {
+        disableMonitor: true,
         opcode: 'getParam',
         blockType: Scratch.BlockType.REPORTER,
         text: 'get param [name]',
@@ -81,6 +84,7 @@
             }
         }
       }, {
+        disableMonitor: true,
         opcode: 'getAllParam',
         blockType: Scratch.BlockType.REPORTER,
         text: 'get all values of param named [name]',
@@ -90,15 +94,18 @@
                 defaultValue: 'extension'
             }
         }
-      },  {
+      }, {
+        disableMonitor: true,
         opcode: 'getValues',
         blockType: Scratch.BlockType.REPORTER,
         text: 'get all values'
       }, {
+        disableMonitor: true,
         opcode: 'getKeys',
         blockType: Scratch.BlockType.REPORTER,
         text: 'get all keys'
       }, {
+        disableMonitor: true,
         opcode: 'getAllInPairs',
         blockType: Scratch.BlockType.REPORTER,
         text: 'get all in pairs'
@@ -106,7 +113,13 @@
         opcode: 'refreshURI',
         blockType: Scratch.BlockType.COMMAND,
         text: 'update url'
-      }]};
+      }, {
+        disableMonitor: true,
+        opcode: 'currentURI',
+        blockType: Scratch.BlockType.REPORTER,
+        text: 'get current url'
+      }
+    ]};
   }
   hasParam({ name }) {
     return urlParams.has(name);
@@ -153,6 +166,9 @@
   }
   refreshURI() {
     history.replaceState(null, "", "?" + urlParams.toString());
+  }
+  currentURI() {
+    return window.location.href;
   }
 }
   Scratch.extensions.register(new QueryParams());
