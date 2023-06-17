@@ -57,7 +57,7 @@
         arguments: {
             name: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'extension'
+                defaultValue: 'fps'
             }
         }
       }, '---', {
@@ -67,7 +67,7 @@
         arguments: {
             name: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'extension'
+                defaultValue: 'fps'
             }
         }
       }, {
@@ -84,7 +84,7 @@
         arguments: {
             name: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'extension'
+                defaultValue: 'fps'
             }
         }
       }, {
@@ -95,7 +95,7 @@
         arguments: {
             name: {
                 type: Scratch.ArgumentType.STRING,
-                defaultValue: 'extension'
+                defaultValue: 'fps'
             }
         }
       }, {
