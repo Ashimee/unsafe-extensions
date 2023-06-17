@@ -1,6 +1,8 @@
 /*!
  * VERSION 1.0
- * Originally created by https://scratch.mit.edu/users/0znzw/ | Licensed Under the MIT License
+ * Made this before the one on turbowarp, just this is V2.
+ * Made in an hour.
+ * By 0znzw | Licensed Under the MIT License
  * DO NOT REMOVE THIS COMMENT
  */
 (function(Scratch) {
