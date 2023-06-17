@@ -19,6 +19,10 @@
       color2: "#9c9c9c",
       color3: "#646464",
       blocks: [{
+        func: 'openOriginPullReq',
+        blockType: Scratch.BlockType.BUTTON,
+        text: 'Original Pull Request'
+      }, '---', {
         opcode: 'setParam',
         blockType: Scratch.BlockType.COMMAND,
         text: 'set param [name] to [value]',
@@ -135,7 +139,6 @@
   }
   deleteParam({ name }) {
     urlParams.delete(name);
-    'sort values keys';
   }
   appendParam({ name, value}) {
     urlParams.append(name, encodeURIComponent(value));
@@ -169,6 +172,11 @@
   }
   currentURI() {
     return window.location.href;
+  }
+  //BUTTONS
+  async openOriginPullReq() {
+    const pullRwqUri = 'https://github.com/TurboWarp/extensions/pull/563';
+    Scratch.redirect(pullRwqUri);
   }
 }
   Scratch.extensions.register(new QueryParams());
