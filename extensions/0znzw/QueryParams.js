@@ -98,6 +98,10 @@
         opcode: 'getKeys',
         blockType: Scratch.BlockType.REPORTER,
         text: 'get all keys'
+      }, {
+        opcode: 'getAll',
+        blockType: Scratch.BlockType.REPORTER,
+        text: 'get all in pairs'
       }, '---', {
         opcode: 'refreshURI',
         blockType: Scratch.BlockType.COMMAND,
@@ -139,6 +143,13 @@
       keys.push(key);
     }
     return JSON.stringify(keys);
+  }
+  getAll() {
+    const pairs = [];
+    for (const [key, value] of urlParams.entries()) {
+      pairs.push({key, value});
+    }
+    return pairs;
   }
   refreshURI() {
     history.replaceState(null, "", "?" + urlParams.toString());
