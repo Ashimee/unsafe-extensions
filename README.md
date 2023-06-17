@@ -1,6 +1,7 @@
 # Unofficial gallery.
 
 For extensions that cant get on the official gallery.
+the "cyclic:prod" deployment is a mimic development server, dont use it.
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
