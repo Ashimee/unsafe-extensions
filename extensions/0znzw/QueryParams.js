@@ -111,7 +111,7 @@
     return decodeURIComponent(urlParams.get(name));
   }
   getAllParam({ name }) {
-    return urlParams.getAll(JSON.stringify(name));
+    return JSON.stringify(urlParams.getAll(name));
   }
   setParam({ name, value }) {
     urlParams.set(name, encodeURIComponent(value));
