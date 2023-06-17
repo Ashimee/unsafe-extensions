@@ -83,7 +83,7 @@
       }, {
         opcode: 'getAllParam',
         blockType: Scratch.BlockType.REPORTER,
-        text: 'get all params named [name]',
+        text: 'get all values of param named [name]',
         arguments: {
             name: {
                 type: Scratch.ArgumentType.STRING,
