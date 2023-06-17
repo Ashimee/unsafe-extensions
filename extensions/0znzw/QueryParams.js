@@ -174,7 +174,7 @@
     return window.location.href;
   }
   //BUTTONS
-  async openOriginPullReq() {
+  openOriginPullReq() {
     const pullRwqUri = 'https://github.com/TurboWarp/extensions/pull/563';
     Scratch.redirect(pullRwqUri);
   }
