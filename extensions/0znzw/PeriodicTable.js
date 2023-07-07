@@ -46,7 +46,7 @@
                         disableMonitor: true,
                         blockType: Scratch.BlockType.REPORTER,
                         arguments: {
-                            elm: { type: Scratch.ArgumentType.STRING, menu: 'ELEMENTS' }
+                            elm: { type: Scratch.ArgumentType.STRING, menu: 'ELEMENTS', acceptReporters: true }
                         }
                     }
                 ],
