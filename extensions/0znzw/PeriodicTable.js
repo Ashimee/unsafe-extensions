@@ -64,14 +64,20 @@
                                 text: "atomic mass",
                                 value: "atomic_mass"
                             },
-                            "boil",
+                            {
+                                text: "boil point",
+                                value: "boil"
+                            },
                             "category",
                             "density",
                             {
                                 text: "discoverer",
                                 value: "discovered_by"
                             },
-                            "melt",
+                            {
+                                text: "melt point",
+                                value: "melt"
+                            },
                             {
                                 text: "molar heat",
                                 value: "molar_heat"
@@ -80,11 +86,17 @@
                                 text: "namer",
                                 value: "named_by"
                             },
-                            "number",
+                            {
+                                text: "index on table",
+                                value: "number"
+                            },
                             "period",
                             "group",
                             "phase",
-                            "source",
+                            {
+                                text: "summary source",
+                                value: "source"
+                            },
                             "summary",
                             "symbol",
                             {
