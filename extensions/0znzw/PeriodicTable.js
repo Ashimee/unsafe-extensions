@@ -42,17 +42,69 @@
                 blocks: [
                     {
                         opcode: 'getElement',
-                        text: 'get element [elm]',
+                        text: '[mode] of element [elm]',
                         disableMonitor: true,
                         blockType: Scratch.BlockType.REPORTER,
                         arguments: {
-                            elm: { type: Scratch.ArgumentType.STRING, menu: 'ELEMENTS' }
+                            elm: { type: Scratch.ArgumentType.STRING, menu: 'ELEMENTS' },
+                            mode: { type: Scratch.ArgumentType.STRING, menu: 'elmAttrs' },
                         }
                     }
                 ],
                 menus: {
                     ELEMENTS: {
                         items: elmNames,
+                        acceptReporters: true
+                    },
+                    elmAttrs: {
+                        items: [
+                            "name",
+                            "appearance",
+                            {
+                                text: "atomic mass",
+                                value: "atomic_mass"
+                            },
+                            "boil",
+                            "category",
+                            "density",
+                            {
+                                text: "discoverer",
+                                value: "discovered_by"
+                            },
+                            "melt",
+                            {
+                                text: "molar heat",
+                                value: "molar_heat"
+                            },
+                            {
+                                text: "namer",
+                                value: "named_by"
+                            },
+                            "number",
+                            "period",
+                            "group",
+                            "phase",
+                            "source",
+                            "summary",
+                            "symbol",
+                            {
+                                text: "electron configuration",
+                                value: "electron_configuration"
+                            },
+                            {
+                                text: "electron configuration (semantic)",
+                                value: "electron_configuration_semantic"
+                            },
+                            {
+                                text: "electron affinity",
+                                value: "electron_affinity"
+                            },
+                            {
+                                text: "electronegativity pauling",
+                                value: "electronegativity_pauling"
+                            },
+                            "JSON"
+                        ],
                         acceptReporters: true
                     }
                 } 
@@ -61,9 +113,11 @@
 
         //utils
         getElement(args) {
-            return JSON.stringify(table.elements[elmIndexes[args.elm].index]);//[args.mode];
+            if (args.mode == "JSON") return JSON.stringify(table.elements[elmIndexes[args.elm].index]);
+            return table.elements[elmIndexes[args.elm].index][args.mode];
         }
     }
 
+    //@ts-expect-error
     Scratch.extensions.register(new PeriodicTable());
 })(Scratch);
