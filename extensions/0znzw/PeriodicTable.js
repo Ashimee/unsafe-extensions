@@ -38,7 +38,7 @@
                 name: 'Periodic Table',
                 color1: '#8E74B4',
                 color2: '#9981bb',
-                color3: '#8E74B4',
+                color3: '#9981bb',
                 blocks: [
                     {
                         opcode: 'getElement',
@@ -46,12 +46,15 @@
                         disableMonitor: true,
                         blockType: Scratch.BlockType.REPORTER,
                         arguments: {
-                            elm: { type: Scratch.ArgumentType.STRING, menu: 'ELEMENTS', acceptReporters: true }
+                            elm: { type: Scratch.ArgumentType.STRING, menu: 'ELEMENTS' }
                         }
                     }
                 ],
                 menus: {
-                    ELEMENTS: elmNames
+                    ELEMENTS: {
+                        items: elmNames,
+                        acceptReporters: true
+                    }
                 } 
             };
         }
