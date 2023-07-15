@@ -69,6 +69,7 @@
                         }
                     }
                 }, {
+                    hideFromPalette: true,
                     opcode: 'sUp_deleteSpriteNoConfirm',
                     blockType: Scratch.BlockType.COMMAND,
                     text: 'Delete sprite [SPRITE] | No Confirmation',
@@ -78,7 +79,7 @@
                             defaultValue: 'Sprite1'
                         }
                     }
-                    }],
+                }],
                 menus: {
                     /* SECTION: colorAtXY.js */
                     cAxy_modes: {
@@ -90,8 +91,8 @@
         }
 
         /* SECTION: shovelutils+.js */
-        sUp_deleteSpriteNoConfirm({ SPRITE }, util) {
-            const target = util.getSpriteTargetByName(SPRITE);
+        sUp_deleteSpriteNoConfirm({ SPRITE }) {
+            const target = runtime.getSpriteTargetByName(SPRITE);
             if (!target || target.isStage) {
                 return;
             }
