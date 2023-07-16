@@ -18,6 +18,9 @@ All images in this folder are licensed under the [GNU General Public License ver
  - Background based on https://bgjar.com/contour-line under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
  Modified by [@0znzw](https://scratch.mit.edu/users/0znzw)
 
+## 0znzw/PeriodicTable.svg
+ - Created by [@0znzw](https://scratch.mit.edu/users/0znzw)
+
 ## 0znzw/QueryParams.svg
  - Created by [@CST1229](https://github.com/CST1229) and [@BlueDome77](https://github.com/BlueDome77) in https://github.com/TurboWarp/extensions/issues/90#issuecomment-1596177193
  - For the SearchAPI extension

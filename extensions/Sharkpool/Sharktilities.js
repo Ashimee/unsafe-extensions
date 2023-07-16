@@ -109,6 +109,16 @@
                     },
                 },
             }, {
+                opcode: 'negAbs',
+                blockType: Scratch.BlockType.REPORTER,
+                text: '-abs [NUM]',
+                arguments: {
+                    NUM: {
+                        type: Scratch.ArgumentType.NUMBER,
+                        defaultValue: 50
+                    }
+                },
+            }, {
                 opcode: 'tripleOperator',
                 blockType: Scratch.BlockType.REPORTER,
                 text: '[NUM1] [OPERATOR1] [NUM2] [OPERATOR2] [NUM3]',
@@ -193,6 +203,10 @@
                 },
             },
         };
+        }
+
+        negAbs({ NUM }) {
+            return -Math.abs(Scratch.Cast.toNumber(NUM));
         }
 
         roundToNearest({ NUMBER, ROUND_TYPE }) {
