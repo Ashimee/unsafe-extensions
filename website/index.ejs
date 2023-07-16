@@ -398,14 +398,20 @@
       </style>
       
       <span onclick="sortExtensions(this,'any',true)" data-active="1" class="sort_button">All</span><wbr>
+      <span onclick="sortExtensions(this,'featured')" data-active="0" class="sort_button">Featured</span><wbr>
+
       <span onclick="sortExtensions(this,'fun')" data-active="0" class="sort_button">Fun</span><wbr>
-      <span onclick="sortExtensions(this,'looks')" data-active="0" class="sort_button">Looks</span><wbr>
-      <span onclick="sortExtensions(this,'audio')" data-active="0" class="sort_button">Audio</span><wbr>
+
       <span onclick="sortExtensions(this,'storage')" data-active="0" class="sort_button">Storage</span><wbr>
       <span onclick="sortExtensions(this,'networking')" data-active="0" class="sort_button">Networking</span><wbr>
-      <span onclick="sortExtensions(this,'utilities')" data-active="0" class="sort_button">Utilities</span><wbr>
-      <span onclick="sortExtensions(this,'additions')" data-active="0" class="sort_button">Expansion</span><wbr>
 
+      <span onclick="sortExtensions(this,'additions')" data-active="0" class="sort_button">Expansion</span><wbr>
+      <span onclick="sortExtensions(this,'conversion')" data-active="0" class="sort_button">Conversion</span><wbr>
+
+      <span onclick="sortExtensions(this,'looks')" data-active="0" class="sort_button">Looks</span><wbr>
+      <span onclick="sortExtensions(this,'audio')" data-active="0" class="sort_button">Audio</span><wbr>
+
+      <span onclick="sortExtensions(this,'utilities')" data-active="0" class="sort_button">Utilities</span><wbr>
       <span onclick="sortExtensions(this,'experimental')" data-active="0" class="sort_button">Experimental</span><wbr>
 
       </div>
@@ -419,13 +425,13 @@
           <p>Placeholder text. Created by <a href="#">Placeholder</a>.</p>
         </div>
 
-        <div class="extension" data-type='["audio","additions"]'>
+        <div class="extension" data-type='["audio","additions","featured"]'>
           <%- banner('0znzw/audioPlus') %>
           <h3>Audio+</h3>
           <p>Completely new audio system.<br>Created by <a href="https://scratch.mit.edu/users/0znzw">0znzw</a>.</p>
         </div>
 
-        <div class="extension" data-type='["utilities"]'>
+        <div class="extension" data-type='["utilities","featured"]'>
           <%- banner('0znzw/NicheToolbox') %>
           <h3>Niche Toolbox</h3>
           <p>Some blocks for niche use cases.<br>Created by <a href="https://scratch.mit.edu/users/0znzw">0znzw</a>.</p>
@@ -471,6 +477,12 @@
           <%- banner('0znzw/PeriodicTable') %>
           <h3>Periodic Table</h3>
           <p>You can now get periodic table elements!<br>Created by <a href="https://scratch.mit.edu/users/0znzw">0znzw</a>.</p>
+        </div>
+
+        <div class="extension" data-type='["conversion","utilities","featured"]' style="visibility:hidden;display:none;">
+          <%- banner('SharkPool/TimeExpanded') %>
+          <h3>Time Expanded</h3>
+          <p>Time conversion and more!<br>Created by <a href="https://www.youtube.com/c/SharkPoolthe1">SharkPool</a>.</p>
         </div>
       </div>
     </div>
