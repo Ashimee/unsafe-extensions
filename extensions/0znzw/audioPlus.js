@@ -1,5 +1,5 @@
 /*
-* v1.0 | Created by @0znzw.
+* v1.4 | Created by @0znzw.
 * Do not remove this comment
 */
 (function (Scratch) {
