@@ -1,5 +1,5 @@
 /*
-* v1.4 | Created by @0znzw.
+* v1.5 | Created by @0znzw.
 * Do not remove this comment
 */
 (function (Scratch) {
@@ -222,7 +222,7 @@
                     },
                     sound_attrs: {
                         acceptReporters: true,
-                        items: ['volume', 'second', 'length']
+                        items: ['volume', 'current time', 'length']
                     }
                 }
             };
@@ -252,6 +252,7 @@
         deleteSound({NAME}) {
             try {
             NAME = Cast.toString(NAME);
+            this.stopSound(NAME);
             delete audios[NAME];
             } catch (e) {
                 console.log(e);
