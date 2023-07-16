@@ -38,6 +38,8 @@
     let sepia = 0;
     let opacity = 100;
     let resizeMode = 'default';
+    let glitchTimer = null;
+    let isGlitchActive = false;
 
     class CanvasEffects {
         getInfo() {
@@ -108,12 +110,20 @@
                             menu: 'RENDERMODE',
                             },
                         },
+                    }, {
+                        opcode: 'glitch',
+                        blockType: Scratch.BlockType.COMMAND,
+                        text: 'start canvas glitch',
+                    }, {
+                        opcode: 'stopglitch',
+                        blockType: Scratch.BlockType.COMMAND,
+                        text: 'stop canvas glitch',
                     }
                 ],
                 menus: {
                     EFFECTMENU: {
                         acceptReporters: true,
-                        items: ['blur', 'contrast', 'saturation', 'color shift', 'brightness', 'invert', 'grayscale', 'sepia', 'opacity'],
+                        items: ['blur', 'contrast', 'saturation', 'brightness', 'invert', 'grayscale', 'sepia', 'opacity'],
                     },
                     RENDERMODE: {
                         acceptReporters: true,
@@ -121,61 +131,70 @@
                     },
                     EFFECTGETMENU: {
                         acceptReporters: true,
-                        items: ['blur', 'contrast', 'saturation', 'color shift', 'brightness', 'invert', 'grayscale', 'sepia', 'opacity', 'resize rendering mode'],
+                        items: ['blur', 'contrast', 'saturation', 'brightness', 'invert', 'grayscale', 'sepia', 'opacity', 'resize rendering mode'],
                     },
-                },
+                }
             };
         }
 
-            geteffect({ EFFECT }) {
-                if (EFFECT === 'blur') {
-                return blur;
-                } else if (EFFECT === 'contrast') {
-                return contrast;
-                } else if (EFFECT === 'saturation') {
-                return saturation;
-                } else if (EFFECT === 'color shift') {
-                return color;
-                } else if (EFFECT === 'brightness') {
-                return brightness;
-                } else if (EFFECT === 'invert') {
-                return invert;
-                } else if (EFFECT === 'grayscale') {
-                return grayscale;
-                } else if (EFFECT === 'sepia') {
-                return sepia;
-                } else if (EFFECT === 'opacity') {
-                return opacity;
-                } else if (EFFECT === 'resize rendering mode') {
-                return resizeMode;
-                }
-                return '';
+        geteffect({ EFFECT }) {
+            switch (EFFECT) {
+                case 'blur':
+                    return blur;
+                case 'contrast':
+                    return contrast;
+                case 'saturation':
+                    return saturation;
+                case 'brightness':
+                    return brightness;
+                case 'invert':
+                    return invert;
+                case 'grayscale':
+                    return grayscale;
+                case 'sepia':
+                    return sepia;
+                case 'opacity':
+                    return opacity;
+                case 'resize rendering mode':
+                    return resizeMode;
+                default:
+                    return;
             }
+        }
 
-            seteffect({ EFFECT, NUMBER }) {
-                if (EFFECT === 'blur') {
-                blur = NUMBER;
-                } else if (EFFECT === 'contrast') {
-                contrast = NUMBER;
-                } else if (EFFECT === 'saturation') {
-                saturation = NUMBER;
-                } else if (EFFECT === 'color shift') {
-                color = NUMBER;
-                } else if (EFFECT === 'brightness') {
-                brightness = NUMBER;
-                } else if (EFFECT === 'invert') {
-                invert = NUMBER;
-                } else if (EFFECT === 'grayscale') {
-                grayscale = NUMBER;
-                } else if (EFFECT === 'sepia') {
-                sepia = NUMBER;
-                } else if (EFFECT === 'opacity') {
-                opacity = NUMBER;
-                }
-                updateStyle();
+        seteffect({ EFFECT, NUMBER }) {
+            switch (EFFECT) {
+                case 'blur':
+                    blur = NUMBER;
+                    break;
+                case 'contrast':
+                    contrast = NUMBER;
+                    break;
+                case 'saturation':
+                    saturation = NUMBER;
+                    break;
+                case 'brightness':
+                    brightness = NUMBER;
+                    break;
+                case 'invert':
+                    invert = NUMBER;
+                    break;
+                case 'grayscale':
+                    grayscale = NUMBER;
+                    break;
+                case 'sepia':
+                    sepia = NUMBER;
+                    break;
+                case 'opacity':
+                    opacity = NUMBER;
+                    break;
+                default:
+                    return;
             }
+            updateStyle();
+        }
 
-            changeeffect({ EFFECT, NUMBER }) {
+        changeeffect({ EFFECT, NUMBER }) {
                 switch (EFFECT) {
                     case 'blur':
                         blur += NUMBER;
@@ -185,9 +204,6 @@
                         break;
                     case 'saturation':
                         saturation += NUMBER;
-                        break;
-                    case 'color shift':
-                        color += NUMBER;
                         break;
                     case 'brightness':
                         brightness += NUMBER;
@@ -204,8 +220,9 @@
                     case 'opacity':
                         opacity += NUMBER;
                         break;
+                    default:
+                        break;
                 }
-
                 updateStyle();
             }
 
@@ -230,6 +247,36 @@
 
             renderscale({ X, Y }) {
                 vm.renderer.resize(X, Y);
+            }
+
+            glitch() {
+                if (!isGlitchActive) {
+                    isGlitchActive = true;
+                    this.glitchRandomize();
+                }
+            }
+
+            stopglitch() {
+                if (isGlitchActive) {
+                    isGlitchActive = false;
+                    clearTimeout(glitchTimer);
+                    glitchTimer = null;
+                }
+            }
+
+            glitchRandomize() {
+                if (!isGlitchActive) {
+                    return;
+                }
+                contrast = Math.max(Math.floor(Math.random() * 101) + 100, 100);
+                saturation = Math.floor(Math.random() * 251);
+                const width = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+                const height = Math.floor(Math.random() * (100 - 5 + 1)) + 5;
+                Scratch.vm.renderer.resize(width, height);
+                updateStyle();
+                glitchTimer = setTimeout(() => {
+                    this.glitchRandomize();
+                }, 50);
             }
         }
     Scratch.extensions.register(new CanvasEffects());
