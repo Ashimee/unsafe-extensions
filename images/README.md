@@ -5,10 +5,13 @@ All images in this folder are licensed under the [GNU General Public License ver
  - Created by [Placeholder](#) in https://github.com/SurvExe1Pc/unsafe-extensions/issues/1#issuecomment-1
 
 ## NicheToolbox.svg
- - Created by [@Sharkpool](https://discord.com/channels/@me/1125293854187323444/1129657575873458216)
+ - Created by [@Sharkpool](https://www.youtube.com/c/SharkPoolthe1)
  - Gear icon from https://svgsilh.com/image/2125614.html under [![PublicDomain](https://licensebuttons.net/p/zero/1.0/80x15.png)](https://creativecommons.org/publicdomain/zero/1.0/).
  - Hammers icon from https://svgsilh.com/image/312334.html under [![PublicDomain](https://licensebuttons.net/p/zero/1.0/80x15.png)](https://creativecommons.org/publicdomain/zero/1.0/).
  - For [@0znzw](https://scratch.mit.edu/users/0znzw)
+
+## Sharktilities.svg
+ - Created by [@Sharkpool](https://www.youtube.com/c/SharkPoolthe1)
 ## local-storage.svg
  - Created by [@True-Fantom](https://scratch.mit.edu/users/TrueFantom/) in https://github.com/TurboWarp/extensions/pull/498.
  - File icons based on https://icon-icons.com/icon/file-pdf/153412 under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
