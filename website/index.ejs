@@ -349,7 +349,10 @@
     };
     %>
     <script>
-      function sortExtensions(btn, type) {
+      function sortExtensions(btn, type, isAny) {
+        isAny = isAny ?? false;
+        if (isAny!=true) isAny=false;
+
         const extensionBlocks = document.querySelectorAll('div[class=extension]');
         const sortButtons = document.querySelectorAll('span[class=sort_button]');
         if (btn.dataset.active == 1) {
@@ -368,6 +371,7 @@
             elm = extensionBlocks.item(elm);
             try {
               const types = JSON.parse(elm.dataset.type);
+              if (isAny) { elm.hidden = false; continue };
               elm.hidden = (!types.includes(type)&&!types.includes('all'));
             } catch { elm.hidden = true };
           }
@@ -393,6 +397,7 @@
       }
       </style>
       
+      <span onclick="sortExtensions(this,'any',true)" data-active="1" class="sort_button">All</span><wbr>
       <span onclick="sortExtensions(this,'fun')" data-active="0" class="sort_button">Fun</span><wbr>
       <span onclick="sortExtensions(this,'looks')" data-active="0" class="sort_button">Looks</span><wbr>
       <span onclick="sortExtensions(this,'audio')" data-active="0" class="sort_button">Audio</span><wbr>
