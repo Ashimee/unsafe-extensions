@@ -316,7 +316,8 @@
             try {
             NAME = Cast.toString(NAME);
             const audio = audios[NAME];
-            audio.stop();
+            audio.pause();
+            audio.currentTime = 0;
             } catch (e) {
                 console.log(e);
             }
