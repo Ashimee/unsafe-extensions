@@ -380,43 +380,98 @@
       }
     </script>
 
-    <div class="section"><style>
-      div.section>span.sort_button {
-        width:auto;
+    <div class="section extensions-outer"><style>
+      div.section>div>span.sort_button {
         padding:0.7rem;
         margin: 0;
         height:auto;
         border-radius:3rem;
       }
-      
-      div.section>span.sort_button[data-active="0"] {
+      div.section>div>span.sort_button::after {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      div.section>div>span.sort_button[data-active="0"] {
         background-color:hsla(0, 100%, 65%, 1);
       }
-      div.section>span.sort_button[data-active="1"] {
+      div.section>div>span.sort_button[data-active="1"] {
         background-color:hsla(30, 100%, 55%, 1);
       }
+      .search {
+        height:2.3rem;
+        width:100%;
+      }
+      div.search {
+        padding-bottom: 2rem;
+      }
+      .searchbox {
+        font-size:18pt;
+        border-radius: 2rem;
+        border-style: solid;
+        border-color: rgba(0,0,0,0.56);
+        color: white;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+        padding: 0.4rem;
+        text-align: center;
+        margin-bottom: 0.25rem;
+      }
+      .searchbutton {
+          width: 3rem;
+          height: 3rem;
+          background-color: #111;
+      }
       </style>
-      
-      <span onclick="sortExtensions(this,'any',true)" data-active="1" class="sort_button">All</span><wbr>
-      <span onclick="sortExtensions(this,'featured')" data-active="0" class="sort_button">Featured</span><wbr>
+      <div style="width: 100%">
+        <span onclick="sortExtensions(this,'any',true)" data-active="1" class="sort_button">All</span><wbr>
+        <span onclick="sortExtensions(this,'featured')" data-active="0" class="sort_button">Featured</span><wbr>
 
-      <span onclick="sortExtensions(this,'fun')" data-active="0" class="sort_button">Fun</span><wbr>
+        <span onclick="sortExtensions(this,'fun')" data-active="0" class="sort_button">Fun</span><wbr>
 
-      <span onclick="sortExtensions(this,'storage')" data-active="0" class="sort_button">Storage</span><wbr>
-      <span onclick="sortExtensions(this,'networking')" data-active="0" class="sort_button">Networking</span><wbr>
+        <span onclick="sortExtensions(this,'storage')" data-active="0" class="sort_button">Storage</span><wbr>
+        <span onclick="sortExtensions(this,'networking')" data-active="0" class="sort_button">Networking</span><wbr>
 
-      <span onclick="sortExtensions(this,'additions')" data-active="0" class="sort_button">Expansion</span><wbr>
-      <span onclick="sortExtensions(this,'conversion')" data-active="0" class="sort_button">Conversion</span><wbr>
+        <span onclick="sortExtensions(this,'additions')" data-active="0" class="sort_button">Expansion</span><wbr>
+        <span onclick="sortExtensions(this,'conversion')" data-active="0" class="sort_button">Conversion</span><wbr>
 
-      <span onclick="sortExtensions(this,'looks')" data-active="0" class="sort_button">Looks</span><wbr>
-      <span onclick="sortExtensions(this,'audio')" data-active="0" class="sort_button">Audio</span><wbr>
+        <span onclick="sortExtensions(this,'looks')" data-active="0" class="sort_button">Looks</span><wbr>
+        <span onclick="sortExtensions(this,'audio')" data-active="0" class="sort_button">Audio</span><wbr>
 
-      <span onclick="sortExtensions(this,'utilities')" data-active="0" class="sort_button">Utilities</span><wbr>
-      <span onclick="sortExtensions(this,'experimental')" data-active="0" class="sort_button">Experimental</span><wbr>
+        <span onclick="sortExtensions(this,'utilities')" data-active="0" class="sort_button">Utilities</span><wbr><wbr>
+        <span onclick="sortExtensions(this,'experimental')" data-active="0" class="sort_button">Experimental</span><wbr>
+        </div>
+        <div style="padding-top: 2rem;width: 100%;" class="search">
+          <center>
+          <input type="text"/ class="search searchbox">
+          <input type="image" src="./svgs/search-50.svg" class="search searchbutton" onclick="searchUpdate(this.previousSibling)"/>
+        </center>
+        </div>
 
+        <script>
+          function searchUpdate(self) {
+            const extensions = Array.from(document.querySelectorAll('div.extension'));
+            const hidden = [];
+            const no_query = document.querySelector('h3#no_query');
+            extensions.forEach(el => {
+              const content = el.textContent.toLowerCase();
+              const val = self.value.toString().toLowerCase();
+              if (content.includes(val)) {
+                el.hidden = false;
+              } else { el.hidden = true };
+              hidden.push(el.hidden);
+            });
+            if (hidden.every(Boolean)) {
+              no_query.hidden = false;
+            } else {
+              no_query.hidden = true;
+            }
+          }
+        </script>
       </div>
 
     <div class="section extensions-outer">
+      <center><h3 hidden id="no_query">No extensions match your query!</h3></center>
       <div class="extensions">
         
         <div class="extension" data-type='["experimental"]'>
