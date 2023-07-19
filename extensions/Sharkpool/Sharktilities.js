@@ -6,6 +6,10 @@
 (function (Scratch) {
     'use strict';
 
+    if (!Scratch.extensions.unsandboxed) {
+        throw new Error('Sharktilities must be run unsandboxed');
+    }
+
     const vm = Scratch.vm;
 
     //ICON
