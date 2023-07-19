@@ -443,8 +443,8 @@
         </div>
         <div style="padding-top: 2rem;width: 100%;" class="search">
           <center>
-          <input type="text"/ class="search searchbox">
-          <input type="image" src="./svgs/search-50.svg" class="search searchbutton" onclick="searchUpdate(this.previousSibling)"/>
+          <input type="text"/ class="search searchbox" id="searchinput">
+          <input type="image" src="./svgs/search-50.svg" class="search searchbutton" onclick="searchUpdate(document.querySelector('#searchinput'))"/>
         </center>
         </div>
 
