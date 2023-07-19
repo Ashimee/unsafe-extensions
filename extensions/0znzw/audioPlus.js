@@ -5,6 +5,10 @@
 (function (Scratch) {
     'use strict';
 
+    if (!Scratch.extensions.unsandboxed) {
+        throw new Error('Audio+ must be run unsandboxed');
+    }
+
     const vm = Scratch.vm;
     const Cast = Scratch.Cast;
 

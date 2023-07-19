@@ -6,6 +6,10 @@
 (function (Scratch) {
     'use strict';
 
+    if (!Scratch.extensions.unsandboxed) {
+        throw new Error('Sound To DataURI must be run unsandboxed');
+    }
+
     class SoundToDataUrl {
         getInfo() {
             return {

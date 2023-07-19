@@ -5,6 +5,10 @@
   (function (Scratch) {
     'use strict';
 
+    if (!Scratch.extensions.unsandboxed) {
+      throw new Error('Color At XY must be run unsandboxed');
+  }
+
     const BlockType = Scratch.BlockType;
     const ArgumentType = Scratch.ArgumentType;
     const Cast = Scratch.Cast;

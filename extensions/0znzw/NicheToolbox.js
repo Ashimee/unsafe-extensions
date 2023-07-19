@@ -6,6 +6,10 @@
 (function (Scratch) {
     'use strict';
 
+    if (!Scratch.extensions.unsandboxed) {
+        throw new Error('NicheToolbox must be run unsandboxed');
+    }
+
     /* DEFINING GLOBAL OBJECTS */
     //CASTING
     const BlockType = Scratch.BlockType;
