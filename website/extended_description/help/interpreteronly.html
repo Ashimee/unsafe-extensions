@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interpreter Only | Term Help</title>
+        <meta name="theme-color" content="#ff4c4c">
+        <meta name="description" content="A place to find extensions that are unable to make it into the extension gallery.">
+        <style>
+          :root {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color-scheme: light dark;
+          }
+          @media (prefers-color-scheme: dark) {
+            :root {
+              color: #eee;
+              background: #111;
+            }
+            a {
+              color: #56b2ff;
+            }
+            a:visited {
+              color: #f192ff;
+            }
+            a:active {
+              color: red;
+            }
+            .invert-dark {
+              filter: invert(100%);
+            }
+          }
+    
+          h1 {
+            margin: 16px 0;
+          }
+          h2, h3, p {
+            margin: 8px 0;
+          }
+    
+          .section {
+            max-width: 928px;
+            margin: 24px auto;
+          }
+    
+          .header h1 {
+            font-size: 2.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: normal;
+            text-align: center;
+          }
+          .header svg {
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0;
+            margin: 0 8px 0 0;
+          }
+          @media (max-width: 750px) {
+            .header h1 {
+              flex-direction: column;
+            }
+            .header svg {
+              margin: 0 0 8px 0;
+            }
+          }
+    
+          .infobox, .development-tools {
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 8px;
+            background: rgba(0, 195, 255, 0.245);
+            border: 1px solid rgba(0, 187, 255, 0.604);
+          }
+          .infobox-warning {
+            background-color: rgba(255, 0, 0, 0.245);
+            border-color: rgba(255, 0, 0, 0.446);
+          }
+          .infobox-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+          }
+    
+          .development-tools {
+            background-color: rgba(200, 0, 255, 0.245);
+            border-color: rgba(234, 0, 255, 0.604);
+          }
+          .development-tools h2 {
+            font-size: 1em;
+          }
+    
+          .extensions {
+            display: -ms-grid;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            margin: 16px -4px;
+          }
+          @media (max-width: 944px) {
+            .extensions {
+              grid-template-columns: 1fr 1fr;
+            }
+          }
+          @media (max-width: 650px) {
+            .extensions {
+              grid-template-columns: 1fr;
+            }
+          }
+    
+          .extension {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            margin: 4px;
+            overflow: hidden;
+            padding: 8px;
+          }
+          @media (prefers-color-scheme: dark) {
+            .extension {
+              border-color: #333;
+            }
+          }
+          .extension h3 {
+            font-size: 1.5em;
+          }
+          .extension-banner {
+            position: relative;
+            margin: -8px -8px 0 -8px;
+          }
+          .extension-image {
+            display: block;
+            width: 100%;
+            /* TODO: see if there's another way to do this that works in older browsers too */
+            aspect-ratio: 2 / 1;
+          }
+    
+          .extension-buttons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity .15s;
+            background: rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+          }
+          .extension:hover .extension-buttons, .extension:focus-within .extension-buttons {
+            opacity: 1;
+          }
+          .extension:hover .extension-buttons {
+            backdrop-filter: blur(0.6px);
+          }
+          .extension-buttons > * {
+            padding: 8px;
+            background-color: #4c97ff;
+            border-radius: 8px;
+            border: none;
+            font: inherit;
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+            pointer-events: auto;
+            transition: filter 0.15s;
+            filter: drop-shadow(0px 1px 3px #00000075);
+          }
+          .extension-buttons > *:hover {
+            filter: drop-shadow(0px 1px 7px black);
+            z-index: 1;
+          }
+          .extension-buttons *:active {
+            filter: brightness(0.85) drop-shadow(0px 1px 2px #00000075);
+          }
+          .extension-buttons *:disabled {
+            opacity: 0.5;
+          }
+          .extension-buttons .copy {
+            margin: 0 8px 0 0;
+          }
+          .extension-buttons .open {
+            background-color: #ff4c4c;
+            color: white;
+          }
+          .extension-buttons :disabled {
+            opacity: 0.5;
+          }
+    
+          footer {
+            opacity: 0.8;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 16px;
+          }
+          footer p {
+            margin: 0 0 8px 0;
+          }
+        </style>
+        <style>
+          /* DELETE THIS IF YOU DONT NEED IT */
+          #warning {
+            background-color: #af272b;
+          }
+          #warning>svg {
+            width: 4rem;
+            height: 4rem;
+            fill: white;
+          }
+          #warning>div#warnSidebar {
+            padding-right: 5.6%;
+            height: 100%;
+            background-color: #e13238;
+          }
+        </style>
+      </head>
+    <body>
+        <div class="extension">
+            <h3>Interpreter Only</h3>
+            <p>This means it cannot be ran with the compiler.<br>The compiler is what turbowarp normally uses.<br><br>
+              <div id="warning">
+                <div id="warnSidebar"> </div>
+                <svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M5.05.31c.81 2.17.41 3.38-.52 4.31C3.55 5.67 1.98 6.45.9 7.98c-1.45 2.05-1.7 6.53 3.53 7.7-2.2-1.16-2.67-4.52-.3-6.61-.61 2.03.53 3.33 1.94 2.86 1.39-.47 2.3.53 2.27 1.67-.02.78-.31 1.44-1.13 1.81 3.42-.59 4.78-3.42 4.78-5.56 0-2.84-2.53-3.22-1.25-5.61-1.52.13-2.03 1.13-1.89 2.75.09 1.08-1.02 1.8-1.86 1.33-.67-.41-.66-1.19-.06-1.78C8.18 5.31 8.68 2.45 5.05.32L5.03.3l.02.01z"></path></svg>
+              </div>
+              <br>
+              To disable it:<ol type="1">
+              <li>Click the button that says "Advanced"</li>
+              <li>Scroll down until you see the section saying "Danger Zone"</li>
+              <li>Check the box that says "Disable Compiler"</li>
+              <li>Now close the menu and your done!</li>
+            </ol></p>
+          </div>
+    </body>
+    </html>
