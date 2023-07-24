@@ -309,7 +309,7 @@
       if (extensionFile.endsWith('.js')) {
         return `Do not add .js when calling banner(): ${extensionFile}`;
       }
-      const imageSource = extensionImages[extensionFile] ? `/0znzw/tests/images/${extensionImages[extensionFile]}` : '/images/unknown.svg';
+      const imageSource = extensionImages[extensionFile] ? `/unsafe-extensions/0znzw/tests/images/${extensionImages[extensionFile]}` : '/unsafe-extensions/images/unknown.svg';
       const imageClasses = ["extension-image"];
       if (options.invertDark) imageClasses.push("invert-dark");
       return `
@@ -339,7 +339,7 @@
         <div class="extension">
           <%- banner('0znzw/tests/buttonInBlock') %>
           <h3>Button In Block</h3>
-          <p>Allows you to put buttons in blocks.<br><a href="../extended_description/0znzw/tests/buttoninblock.html">Extended description</a>.</p>
+          <p>Allows you to put buttons in blocks.<br><a href="/unsafe-extensions/extended_description/0znzw/tests/buttoninblock.html">Extended description</a>.</p>
         </div>
 
         <div class="extension">
