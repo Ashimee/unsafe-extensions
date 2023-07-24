@@ -24,7 +24,7 @@
                     arguments: {
                         TEXT: {
                             type: Scratch.ArgumentType.STRING,
-                            defaultValue: 'eval [js] \\[this arg wont be converted :D]'
+                            defaultValue: 'eval [js]'
                         },
                         ARG_MAPPING: {
                             //removed
