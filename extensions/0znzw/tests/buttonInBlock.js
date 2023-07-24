@@ -140,7 +140,7 @@
                         arguments: {
                             BUTTON: {
                                 type: 'button',
-                                defaultValue: 'I AM A COOL BUTTON' //This is the text displayed on the button AND also the function name, so keep that in mind.
+                                defaultValue: 'test button' //This is the text displayed on the button AND also the function name, so keep that in mind.
                             }
                         }
                     }
