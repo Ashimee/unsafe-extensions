@@ -1,5 +1,6 @@
   /*
   * ColorAtXY extension v1.0 by 0znzw (English Version)
+  * THIS EXTENSION WAS MINE, I LET SHARKPOOL USE IT, I WAS NOT CREDITED PROPERLY
   * Do not remove this comment
   */
   (function (Scratch) {
