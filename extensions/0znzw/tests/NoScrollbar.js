@@ -3,7 +3,7 @@
         getInfo() {
             return {
                 id: '0znzwNoScrollbar',
-                name: '',
+                name: 'No Scrollbar :)',
                 menus: {},
                 blocks: [
                     {
