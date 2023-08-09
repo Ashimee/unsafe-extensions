@@ -1,7 +1,9 @@
 /*
-* v1.0 | Created by @0znzw.
-* Concept by SharkPool || Original non functional version by GPT-3.
-* THIS EXTENSION WAS MINE, I LET SHARKPOOL USE IT, I WAS NOT CREDITED PROPERLY
+ * 
+ * 
+ * v1.1 | Created by @0znzw.
+ * Bruh this is perfect code stfu
+ * 
 * Do not remove this comment
 */
 (function (Scratch) {
@@ -11,11 +13,27 @@
         throw new Error('Sound To DataURI must be run unsandboxed');
     }
 
+    function getCategoryColor(category_id) {
+        const bubble = document.querySelector(`.scratchCategoryId-${category_id} .scratchCategoryItemBubble`);  
+        const styles = window.getComputedStyle(bubble);
+        const backgroundColor = styles.backgroundColor;
+        const borderColor = styles.borderColor;
+        function rgbToHex(rgb) {
+            const match = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+            if (match) {
+                return "#" + match.slice(1).map(x => parseInt(x).toString(16).padStart(2, '0')).join('');
+            }
+            return rgb;
+        }
+        return {color1: rgbToHex(backgroundColor), color2: rgbToHex(borderColor)};
+    }
+
     class SoundToDataUrl {
         getInfo() {
             return {
                 id: '0znzwsoundDataUrl',
-                color1: "#009dff",
+                color1: getCategoryColor('sound').color1,
+                color2: getCategoryColor('sound').color2,
                 name: "Sound to Data URL",
                 blocks: [{
                     opcode: 'soundToDataUrl',
