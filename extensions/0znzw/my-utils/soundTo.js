@@ -1,6 +1,7 @@
 /*
 * v1.0 | Created by @0znzw.
 * Concept by SharkPool || Original non functional version by GPT-3.
+* THIS EXTENSION WAS MINE, I LET SHARKPOOL USE IT, I WAS NOT CREDITED PROPERLY
 * Do not remove this comment
 */
 (function (Scratch) {
