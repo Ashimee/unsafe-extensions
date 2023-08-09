@@ -4,7 +4,6 @@
             return {
                 id: '0znzwNoScrollbar',
                 name: 'No Scrollbar :)',
-                menus: {},
                 blocks: [
                     {
                         //@ts-expect-error
