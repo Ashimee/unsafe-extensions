@@ -37,6 +37,8 @@
             return {
                 id: '0znzwNicheToolbox',
                 color1: "#ed6300",
+                color2: "#d65900",
+                color3: "#c65200",
                 name: "The Niche Toolbox",
                 menuIconURI,
                 blocks: [_addLabel('Color at XY'), {
@@ -55,7 +57,8 @@
                     text: 'convert sound [SOUND] to data URL',
                     arguments: {
                         SOUND: {
-                            type: Scratch.ArgumentType.SOUND
+                            type: Scratch.ArgumentType.STRING,
+                            menu: 'soundsMenu'
                         }
                     }
                 }, _addLabel('ShovelUtils+'), {
@@ -85,6 +88,11 @@
                     }
                 }],
                 menus: {
+                    /* UTIL MENUS */
+                    soundsMenu: {
+                        acceptReporters: true,
+                        items: '_getSounds'
+                    },
                     /* SECTION: colorAtXY.js */
                     cAxy_modes: {
                         acceptReporters: true,
@@ -92,6 +100,23 @@
                     }
                 }
             };
+        }
+
+        _getSounds() {
+            const sounds = Scratch.vm.runtime.getEditingTarget().sprite.sounds.map(item=>{
+                return item.name;
+            });
+            if (sounds.length > 0) {
+                return sounds;
+            }
+            return [{text:'',value:''}];
+        }
+
+        _getSoundIndex(soundName, util) {
+            const sounds = util.target.sprite.sounds;
+            return sounds.indexOf(sounds.filter((sound) => {
+                return sound.name == soundName;
+            })[0]);
         }
 
         /* SECTION: shovelutils+.js */
@@ -152,12 +177,6 @@
             return dataUrl;
         }
 
-        _getSoundIndex(soundName, util) {
-            const sounds = util.target.sprite.sounds;
-            return sounds.indexOf(sounds.filter((sound) => {
-                return sound.name == soundName;
-            })[0]);
-        }
     }
 
     Scratch.extensions.register(new NicheToolbox());
