@@ -2,6 +2,17 @@
 * v2.1 | Created by @LilyMakesThings, Updated by @0znzw.
 * Do not remove this comment
 */
+/*
+ *
+ * if you use this add this comment to your file!!
+ * Button system updated by @0znzw.
+ * Button stuff based on Xeltalliv's and LilyMakesThings(es) tests.
+ * Licensed Under MIT License
+ * 
+ * 0znzw: https://scratch.mit.edu/users/0znzw
+ * Xeltalliv: https://github.com/Xeltalliv
+ * LilyMakesThings: https://scratch.mit.edu/users/LilyMakesThings
+ */
 (function (Scratch) {
     'use strict';
 
