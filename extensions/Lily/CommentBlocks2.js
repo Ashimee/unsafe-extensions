@@ -115,7 +115,7 @@ Info about this button:
 
     //@ts-expect-error
     if (!(vm.exports.IRGenerator && vm.exports.JSGenerator)) {//if you use this change the extension name.
-        console.error("VM is too old, the \"TEST | Button in blocks\" extension will only work with the compiler disabled.\nPlease compile the GUI with the VM PR https://github.com/TurboWarp/scratch-vm/pull/141");
+        console.error("VM is too old, the \"Comment Blocks+\" extension will only work with the compiler disabled.\nPlease compile the GUI with the VM PR https://github.com/TurboWarp/scratch-vm/pull/141");
     }
     
     //MAKE SURE AlL THE CODE IN THIS BLOCK IS NOT REMOVED
