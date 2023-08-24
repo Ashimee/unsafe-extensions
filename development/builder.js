@@ -160,7 +160,7 @@ class Builder {
 
     const ejsData = {
       mode: this.mode,
-      host: this.mode === 'development' ? 'http://localhost:8000/' : 'https://survexe1pc.github.io/unsafe-extensions/',
+      host: this.mode === 'development' ? 'http://localhost:8000/' : 'https://surv.is-a.dev/unsafe-extensions/',
       mostRecentExtensions: mostRecentExtensions,
       extensionImages: images
     };
