@@ -1,5 +1,5 @@
 /*
-* Switch-Case extension v1.0 by 0znzw (English Version)
+* Switch-Case extension v1.1 by 0znzw (English Version)
 * All code is by 0znzw || licensed under MIT license.
 * Do not remove this comment
 */
@@ -87,7 +87,7 @@
         self.ranCase = false;
         setBlockByID(target, blockID, self);
 
-        util.startBranch();
+        return 1;
       }
 
       case_({ DATA }, util) {
@@ -96,13 +96,15 @@
         const blockID = thread.peekStack();
 
         let outer = getOuterBlockID(target, blockID);
-        if (outer.opcode != '0znzwSwitchCase_switch_') return;
+        if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
         
         if (DATA == outer.switchData) {
           outer.ranCase = true;
           setBlockByID(target, outer.id, outer);
-          util.startBranch();
+          return 1;
         }
+
+        return 0;
       }
 
       default_(args, util) {
@@ -113,11 +115,11 @@
         let self = getBlockByID(target, blockID);
         let outer = getOuterBlockID(target, blockID);
 
-        if (self.next) return;
-        if (outer.opcode != '0znzwSwitchCase_switch_') return;
+        if (self.next) return 0;
+        if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
 
-        if (outer.ranCase) return;
-        util.startBranch();
+        if (outer.ranCase) return 0;
+        return 1;
       }
     }
     Scratch.extensions.register(new SwitchCaseExt());
