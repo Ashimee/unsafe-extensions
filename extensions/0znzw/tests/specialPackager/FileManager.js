@@ -1,5 +1,5 @@
 /*
-  Created by 0znzw | v1.4
+  Created by 0znzw | v1.5
   Licensed Under MIT License.
   DO NOT REMOVE THIS COMMENT!!
 */
@@ -11,7 +11,7 @@
       fs = window.fileSystemPromiseAPI;
       fileSystemAPI = window.fileSystemAPI
     } catch(err) {
-      console.log('')
+      console.error('failed to load fs')
     }
 
     class fileReader {
