@@ -30,6 +30,11 @@
               text: 'Directorys'
             },
             {
+              blockType: Scratch.BlockType.REPORTER,
+              opcode: 'getCwd',
+              text: 'current directory'
+            },
+            {
               blockType: Scratch.BlockType.BOOLEAN,
               opcode: 'isDirectory',
               text: 'is [PATH] a directory?',
@@ -318,7 +323,7 @@
         try { fileSystemAPI && 1 } catch { return false };
         try { fileSystemPromiseAPI && 1 } catch { return false };
         try { pathAPI && 1 } catch { return false };
-        try { appAPI && 1 } catch { return false };
+        try { CD && 1 } catch { return false };
         return true;
       }
       /* path utils */
@@ -456,6 +461,9 @@
       }
       /* end writing files */
       /* directory's */
+      getDirectory() {
+        return CD();
+      }
       isDirectory({ PATH }) {
         PATH = Scratch.Cast.toString(PATH);
         if (!fileSystemAPI.existsSync(PATH)) return false;
