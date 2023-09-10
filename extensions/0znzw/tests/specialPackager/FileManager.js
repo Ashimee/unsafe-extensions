@@ -6,8 +6,9 @@
 (function(Scratch) {
     'use strict';
 
+    let fs;
     try {
-      const fs = window.fileSystemPromiseAPI;
+      fs = window.fileSystemPromiseAPI;
     } catch(err) {
       console.log('')
     }
@@ -273,6 +274,8 @@
       /* end utilitys */
       can_use_api() {
         try { fs && 1 } catch { return false };
+        try { fileSystemAPI && 1 } catch { return false };
+        try { fileSystemPromiseAPI && 1 } catch { return false };
         try { pathAPI && 1 } catch { return false };
         try { appAPI && 1 } catch { return false };
         return true;
