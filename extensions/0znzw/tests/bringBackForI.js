@@ -1,3 +1,8 @@
+/*
+  Created by 0znzw | v1
+  Licensed Under MIT License.
+  DO NOT REMOVE THIS COMMENT!!
+*/
 (function(Scratch){
     function getCategoryColor(category_id) {
         const bubble = document.querySelector(`.scratchCategoryId-${category_id} .scratchCategoryItemBubble`);  
