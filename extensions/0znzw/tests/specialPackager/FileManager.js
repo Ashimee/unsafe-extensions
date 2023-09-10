@@ -1,5 +1,5 @@
 /*
-  Created by 0znzw | v1.2
+  Created by 0znzw | v1.4
   Licensed Under MIT License.
   DO NOT REMOVE THIS COMMENT!!
 */
@@ -9,6 +9,7 @@
     let fs;
     try {
       fs = window.fileSystemPromiseAPI;
+      fileSystemAPI = window.fileSystemAPI
     } catch(err) {
       console.log('')
     }
