@@ -527,6 +527,8 @@
             return stats.ctime.toString();
           case 'inode change time (MS)':
             return stats.ctimeMs;
+          default:
+            return stats.size;
         }
       }
       /* end attributes section */
