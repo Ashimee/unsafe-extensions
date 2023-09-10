@@ -1,5 +1,5 @@
 /*
-  Created by 0znzw | v1.5
+  Created by 0znzw | v2
   Licensed Under MIT License.
   DO NOT REMOVE THIS COMMENT!!
 */
@@ -48,6 +48,20 @@
                 PATH: {
                   type: Scratch.ArgumentType.STRING,
                   defaultValue: 'C:\\Hello'
+                }
+              }
+            },
+            {
+              blockType: Scratch.BlockType.COMMAND,
+              opcode: 'rmDir',
+              text: 'remove directory [PATH] recursivly: [RECURSIVE]',
+              arguments: {
+                PATH: {
+                  type: Scratch.ArgumentType.STRING,
+                  defaultValue: 'C:\\Hello'
+                },
+                RECURSIVE: {
+                  type: Scratch.ArgumentType.BOOLEAN
                 }
               }
             },
@@ -129,6 +143,17 @@
               }
             },
             {
+              blockType: Scratch.BlockType.COMMAND,
+              opcode: 'removeFile',
+              text: 'delete file [PATH]',
+              arguments: {
+                PATH: {
+                  type: Scratch.ArgumentType.STRING,
+                  defaultValue: 'C:\\Hello\\world.txt'
+                }
+              }
+            },
+            {
               blockType: Scratch.BlockType.LABEL,
               text: 'Attributes'
             },
@@ -170,6 +195,21 @@
                 SEP: {
                   type: Scratch.ArgumentType.STRING,
                   defaultValue: '\\'
+                }
+              }
+            },
+            {
+              blockType: Scratch.BlockType.REPORTER,
+              opcode: 'joinPath',
+              text: 'join paths [PATH] [PATH2]',
+              arguments: {
+                PATH: {
+                  type: Scratch.ArgumentType.STRING,
+                  defaultValue: 'C:\\Hello'
+                },
+                PATH2: {
+                  type: Scratch.ArgumentType.STRING,
+                  defaultValue: 'world.txt'
                 }
               }
             },
@@ -338,20 +378,48 @@
       async readFile({ PATH, MODE }) {
         PATH = Scratch.Cast.toString(PATH);
         MODE = Scratch.Cast.toString(MODE);
+        function ab2str(buf) {
+          return String.fromCharCode.apply(null, new Uint16Array(buf));
+        }
+        
+        function str2ab(str) {
+          var buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
+          var bufView = new Uint16Array(buf);
+          for (var i=0, strLen=str.length; i<strLen; i++) {
+            bufView[i] = str.charCodeAt(i);
+          }
+          return buf;
+        }
+        function bytesArrToBase64(arr) {
+          const abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"; // base64 alphabet
+          const bin = n => n.toString(2).padStart(8,0); // convert num to 8-bit binary string
+          const l = arr.length
+          let result = '';
+        
+          for(let i=0; i<=(l-1)/3; i++) {
+            let c1 = i*3+1>=l; // case when "=" is on end
+            let c2 = i*3+2>=l; // case when "=" is on end
+            let chunk = bin(arr[3*i]) + bin(c1? 0:arr[3*i+1]) + bin(c2? 0:arr[3*i+2]);
+            let r = chunk.match(/.{1,6}/g).map((x,j)=> j==3&&c2 ? '=' :(j==2&&c1 ? '=':abc[+('0b'+x)]));  
+            result += r.join('');
+          }
+        
+          return result;
+        }
         let DATA = '';
         try {
-          DATA = await fs.readFile(PATH, 'utf8');
+          DATA = await fs.readFile(PATH);
         } catch(e) {
           console.error(e);
           return '';
         }
         switch(MODE) {
           case 'base64':
-            DATA = Base64.encode(DATA);
+            return bytesArrToBase64(DATA);
           default:
-            DATA = DATA;
+            DATA = ab2str(new Uint16Array(DATA));
+            return DATA;
         }
-        return DATA;
       }
       /* end reading files */
       /* writing files */
@@ -365,6 +433,12 @@
         fileSystemAPI.appendFile(PATH, '', function (err) {
           if (err) console.error(err);
         }); 
+      }
+      removeFile({ PATH }) {
+        PATH = Scratch.Cast.toString(PATH);
+        fileSystemAPI.unlink(PATH, err => {
+          if (err) console.error(err);
+        });
       }
       async writeFile({ DATA, PATH, MODE }) {
         DATA = Scratch.Cast.toString(DATA);
@@ -397,6 +471,13 @@
               }
             });
           }
+        });
+      }
+      rmDir({ PATH, RECURSIVE }) {
+        PATH = Scratch.Cast.toString(PATH);
+        RECURSIVE = Scratch.Cast.toBoolean(RECURSIVE);
+        fileSystemAPI.rmdir(PATH, { recursive: RECURSIVE }, err => {
+          if (err) console.error(err);
         });
       }
       async listDir({ PATH }) {
