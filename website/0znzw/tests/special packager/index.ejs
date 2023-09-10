@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Unsafe Extension Gallery | 0znzw's Tests</title>
+    <title>Unsafe Extension Gallery | 0znzw's Special Extensions</title>
     <meta name="theme-color" content="#ff4c4c">
     <style>
       :root {
@@ -205,7 +205,7 @@
 
       <div class="infobox infobox-warning">
         <div class="infobox-title">These extensions are not compatible with Scratch.</div>
-        DO NOT USE THESE, THEY ARE TESTS, ARE VERY BUGGY, AND COULD CORRUPT YOUR PROJECT.
+        YOU CANNOT USE THESE OUTSIDE OF A PACKAGED ELECTRON PROJECT THAT HAS USED THE UTILITY
       </div>
 
     <%
@@ -308,7 +308,7 @@
       if (extensionFile.endsWith('.js')) {
         return `Do not add .js when calling banner(): ${extensionFile}`;
       }
-      const imageSource = extensionImages[extensionFile] ? `/unsafe-extensions/0znzw/tests/images/${extensionImages[extensionFile]}` : '/unsafe-extensions/images/unknown.svg';
+      const imageSource = extensionImages[extensionFile] ? `/unsafe-extensions/0znzw/tests/specialPackager/images/${extensionImages[extensionFile]}` : '/unsafe-extensions/images/unknown.svg';
       const imageClasses = ["extension-image"];
       if (options.invertDark) imageClasses.push("invert-dark");
       return `
@@ -334,29 +334,17 @@
 
     <div class="section extensions-outer">
       <div class="extensions">
-        
+
         <div class="extension">
-          <%- banner('0znzw/tests/buttonInBlock') %>
-          <h3>Button In Block</h3>
-          <p>Allows you to put buttons in blocks.<br><a href="/unsafe-extensions/extended_description/0znzw/tests/buttoninblock.html">Extended description</a>.</p>
+          <%- banner('0znzw/tests/specialPackager/FileManager') %>
+          <h3>File Manager</h3>
+          <p>Read and Write files on the users computer!<br>Created by <a href="https://scratch.mit.edu/users/0znzw">0znzw</a>.</p>
         </div>
 
         <div class="extension">
-          <%- banner('0znzw/tests/addonBlockCreator') %>
-          <h3>AddonBlock Creator</h3>
-          <p>Allows you to register custom addon blocks!<br>Created by <a href="https://scratch.mit.edu/users/0znzw">0znzw</a>.<br><a href="/unsafe-extensions/extended_description/0znzw/tests/addonBlockCreator.html">Extended description</a>.</p>
-        </div>
-
-        <div class="extension">
-          <%- banner('0znzw/tests/bringBackForI') %>
-          <h3>Bring Back For-I</h3>
-          <p>Brings back the For I block<br>Created by <a href="https://scratch.mit.edu/users/0znzw">0znzw</a>.</p>
-        </div>
-
-        <div class="extension">
-          <%- banner('0znzw/tests/NoScrollbar') %>
-          <h3>No Scrollbar</h3>
-          <p>Remove the scrollbar.<br>Created by <a href="https://scratch.mit.edu/users/0znzw">0znzw</a>.</p>
+          <%- banner('0znzw/tests/specialPackager/AdvancedBase64') %>
+          <h3>Advanced Base64</h3>
+          <p>Encode and Decode RAW Data with base64.<br>Created by <a href="https://scratch.mit.edu/users/0znzw">0znzw</a>.</p>
         </div>
 
       </div>
@@ -366,7 +354,6 @@
       <p>TurboWarp is not affiliated with Scratch, the Scratch Team, or the Scratch Foundation.</p>
       <div class="links">
         <a href="https://docs.turbowarp.org/development/custom-extensions">Developer Documentation</a>
-        <a href="./special packager">Special Packager Extensions</a>
       </div>
     </footer>
   </body>
