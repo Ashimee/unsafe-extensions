@@ -1,3 +1,8 @@
+/*
+  Created by 0znzw | v1
+  Licensed Under MIT License.
+  DO NOT REMOVE THIS COMMENT!!
+*/
 (function(Scratch){
     class NoScrollbar {
         getInfo() {
