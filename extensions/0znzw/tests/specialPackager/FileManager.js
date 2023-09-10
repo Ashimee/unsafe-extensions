@@ -1,5 +1,5 @@
 /*
-  Created by 0znzw | v2.2
+  Created by 0znzw | v2.5
   Licensed Under MIT License.
   DO NOT REMOVE THIS COMMENT!!
 */
@@ -155,12 +155,20 @@
               }
             },
             {
-              blockType: Scratch.BlockType.LABEL,
-              text: 'Attributes'
-            },
-            {
-              blockType: Scratch.BlockType.LABEL,
-              text: 'COMING SOON!'
+              blockType: Scratch.BlockType.REPORTER,
+              opcode: 'getAttribute',
+              text: 'get attribute [NAME] from file [PATH]',
+              arguments: {
+                PATH: {
+                  type: Scratch.ArgumentType.STRING,
+                  defaultValue: 'C:\\Hello\\world.txt'
+                },
+                NAME: {
+                  type: Scratch.ArgumentType.STRING,
+                  defaultValue: 'file size',
+                  menu: 'file_attributes'
+                }
+              }
             },
             {
               blockType: Scratch.BlockType.LABEL,
@@ -297,7 +305,12 @@
             },
           ], menus: {
             encodings: {acceptReporters: true, items: '_getEncodings'},
-            modes: {acceptReporters: true, items: ['text', 'base64']}
+            modes: {acceptReporters: true, items: ['text', 'base64']},
+            file_attributes: {acceptReporters: true, items: [
+              'file size', 'last access time', 'last access time (MS)',
+              'creation time', 'creation time (MS)', 'inode change time',
+              'inode change time (MS)'
+            ]}
           }
         };
       }
@@ -490,6 +503,33 @@
         return JSON.stringify(files);
       }
       /* end directory's */
+      /* file attributes */
+      getAttribute({ PATH, NAME }) {
+        PATH = Scratch.Cast.toString(PATH);
+        NAME = Scratch.Cast.toString(NAME);
+        try {
+          var stats = fileSystemAPI.statSync(PATH);
+        } catch (err) {
+          console.error(err);
+        }
+        switch(NAME) {
+          case 'file size':
+            return stats.size;
+          case 'last access time':
+            return stats.atime.toString();
+          case 'last access time (MS)':
+            return stats.atimeMs;
+          case 'creation time':
+            return stats.birthtime.toString();
+          case 'creation time (MS)':
+            return stats.birthtimeMs;
+          case 'inode change time':
+            return stats.ctime.toString();
+          case 'inode change time (MS)':
+            return stats.ctimeMs;
+        }
+      }
+      /* end attributes section */
     }
     Scratch.extensions.register(new fileReader());
   })(Scratch);
