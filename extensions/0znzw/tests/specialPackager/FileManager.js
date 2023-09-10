@@ -83,27 +83,7 @@
             },
             {
               blockType: Scratch.BlockType.LABEL,
-              text: 'File Reading'
-            },
-            {
-              blockType: Scratch.BlockType.REPORTER,
-              opcode: 'readFile',
-              text: 'read file [PATH] as type [MODE]',
-              arguments: {
-                PATH: {
-                  type: Scratch.ArgumentType.STRING,
-                  defaultValue: 'C:\\Hello\\world.txt'
-                },
-                MODE: {
-                  type: Scratch.ArgumentType.STRING,
-                  defaultValue: 'text',
-                  menu: 'modes'
-                }
-              }
-            },
-            {
-              blockType: Scratch.BlockType.LABEL,
-              text: 'File Writing'
+              text: 'File Handling'
             },
             {
               blockType: Scratch.BlockType.BOOLEAN,
@@ -136,6 +116,22 @@
                   type: Scratch.ArgumentType.STRING,
                   defaultValue: 'Hello, World!'
                 },
+                PATH: {
+                  type: Scratch.ArgumentType.STRING,
+                  defaultValue: 'C:\\Hello\\world.txt'
+                },
+                MODE: {
+                  type: Scratch.ArgumentType.STRING,
+                  defaultValue: 'text',
+                  menu: 'modes'
+                }
+              }
+            },
+            {
+              blockType: Scratch.BlockType.REPORTER,
+              opcode: 'readFile',
+              text: 'read file [PATH] as type [MODE]',
+              arguments: {
                 PATH: {
                   type: Scratch.ArgumentType.STRING,
                   defaultValue: 'C:\\Hello\\world.txt'
