@@ -1,5 +1,5 @@
 /*
-  Created by 0znzw | v2
+  Created by 0znzw | v2.2
   Licensed Under MIT License.
   DO NOT REMOVE THIS COMMENT!!
 */
@@ -461,7 +461,7 @@
       }
       /* end writing files */
       /* directory's */
-      getDirectory() {
+      getCwd() {
         return CD();
       }
       isDirectory({ PATH }) {
