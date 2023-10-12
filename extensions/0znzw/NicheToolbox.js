@@ -1,5 +1,5 @@
 /*
-* Niche Toolbox extension v1.2 by 0znzw (English Version)
+* Niche Toolbox extension v1.2.1 by 0znzw (English Version)
 * All code is by 0znzw || licensed under MIT license.
 * Do not remove this comment
 */
@@ -148,8 +148,10 @@
                 let n = t.toString(16).padStart(2,"0"),o = r.toString(16).padStart(2,"0"),g = a.toString(16).padStart(2,"0"),i = S.toString(16).padStart(2,"0");return `#${n}${o}${g}${i}`;
             }
             var x = Cast.toNumber(args.x);
-            var y = Cast.toNumber(args.y);
-            const returnObj = renderer.extractColor(runtime.stageWidth / 2 + x,runtime.stageHeight / 2 + y,1).color;
+            var y = Cast.toNumber(args.y) * -1;
+            const canvas = (document.querySelector("canvas").getBoundingClientRect());
+            console.log(canvas);
+            const returnObj = renderer.extractColor(x, y,1).color;
             switch (args.attr) {
                 case 'hex':
                     return rgbaToHex(returnObj.r,returnObj.g,returnObj.b,returnObj.a).toString();
@@ -176,7 +178,6 @@
             const dataUrl = sprite.sounds[index].asset.encodeDataURI();
             return dataUrl;
         }
-
     }
 
     Scratch.extensions.register(new NicheToolbox());
