@@ -99,44 +99,22 @@
               text: 'default'
             },
             {
-              blockType: Scratch.BlockType.BUTTON,
-              text: brokenText,
-              func: 'brokenUpdate'
-            },
-            {
-              hideFromPalette: showBroken,
-              //@ts-expect-error
-              blockType: Scratch.BlockType.XML,
-              xml: genLabelXML('THESE BLOCKS CAN CORRUPT YOUR\nPROJECT, USE THEM AT YOUR OWN\nRISK.'),
-            },
-            {
-              hideFromPalette: showBroken,
-              opcode: 'lcv_case_',
-              blockType: Scratch.BlockType.REPORTER,
-              text: '[DATA]',
-              arguments: {
-                DATA: {
-                  type: Scratch.ArgumentType.STRING,
-                  menu: 'lcv'
-                }
-              }
-            },
-            {
-              hideFromPalette: showBroken,
               opcode: 'break_',
               blockType: Scratch.BlockType.COMMAND,
               text: 'break',
               isTerminal: true
             },
             {
-              hideFromPalette: showBroken,
-              opcode: 'continue_',
+              opcode: 'next_',
               blockType: Scratch.BlockType.COMMAND,
-              text: 'continue',
-              isTerminal: true
+              text: 'run next case',
+              arguments: {
+                DATA: {
+                  type: Scratch.ArgumentType.BOOLEAN,
+                },
+              }
             },
             {
-              hideFromPalette: showBroken,
               opcode: 'exec_case_',
               blockType: Scratch.BlockType.COMMAND,
               text: 'run case [DATA]',
@@ -150,14 +128,33 @@
               }
             },
             {
+              blockType: Scratch.BlockType.BUTTON,
+              text: brokenText,
+              func: 'brokenUpdate'
+            },
+            {
               hideFromPalette: showBroken,
-              opcode: 'next_',
+              //@ts-expect-error
+              blockType: Scratch.BlockType.XML,
+              xml: genLabelXML('THESE BLOCKS CAN CORRUPT YOUR\nPROJECT, USE THEM AT YOUR OWN\nRISK.'),
+            },
+            {
+              hideFromPalette: showBroken,
+              opcode: 'continue_',
               blockType: Scratch.BlockType.COMMAND,
-              text: 'run next case',
+              text: 'continue',
+              isTerminal: true
+            },
+            {
+              hideFromPalette: showBroken,
+              opcode: 'lcv_case_',
+              blockType: Scratch.BlockType.REPORTER,
+              text: '[DATA]',
               arguments: {
                 DATA: {
-                  type: Scratch.ArgumentType.BOOLEAN,
-                },
+                  type: Scratch.ArgumentType.STRING,
+                  menu: 'lcv'
+                }
               }
             },
           ], menus: {
