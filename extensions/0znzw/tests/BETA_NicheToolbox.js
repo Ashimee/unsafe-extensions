@@ -108,13 +108,12 @@
                 defaultValue: 'Sprite1'
               }
             }
-          }, { /* this is not done but it will be added */
-            hideFromPalette: true,
+          }, {
             opcode: 'sUp_deleteSound',
             blockType: BlockType.COMMAND,
-            text: 'delete costume [SNDNAME] in [SPRITE]',
+            text: 'delete sound [SNDNAME] in [SPRITE]',
             arguments: {
-              COSNAME: {
+              SNDNAME: {
                 type: ArgumentType.STRING,
                 defaultValue: 'pop'
               },
@@ -181,9 +180,18 @@
       }
   
       /* general utilitys for the extension(s) */
+      _GetCanvasWxH() {
+        let canvas = runtime.renderer.canvas;
+        let width = canvas.width;
+        let height = canvas.height;
+        return {width, height};
+      }
+
       _ScratchXYtoCanvasXY(_x, _y) { /* Created by ObviousAlexC, modified by 0znzw */
-        return { x: (_x + runtime.stageWidth / 2),
-                 y: (_y * -1 + runtime.stageHeight / 2) };
+        let canvasSize = this._GetCanvasWxH();
+        console.log(canvasSize);
+        return { x: (_x + canvasSize.width / 2),
+                 y: (_y * -1 + canvasSize.height / 2) };
       }
   
       hexify(str) {
@@ -255,7 +263,7 @@
         if (!target || this.RESERVED_NAMES.includes(SPRITE.toLowerCase())) {
           return;
         }
-        /* insert working code here */
+        target.deleteSound(this._getSoundIndex(SNDNAME));
       }
   
       /* colorAtXY.js */
