@@ -303,7 +303,7 @@
       }
 
       /* PadUtils.js */
-      addPadding({ TEXT, CHAR, LEN, SEND }) {
+      PU_addPadding({ TEXT, CHAR, LEN, SEND }) {
         TEXT = Scratch.Cast.toString(TEXT);
         CHAR = Scratch.Cast.toString(CHAR);
         LEN = Scratch.Cast.toNumber(LEN);
