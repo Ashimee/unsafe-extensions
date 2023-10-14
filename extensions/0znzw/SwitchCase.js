@@ -61,6 +61,7 @@
       return text;
     }
 
+    const vm = Scratch.vm;
     let showBroken = true;
     let brokenText = 'Show Broken';
 
@@ -104,6 +105,7 @@
             },
             {
               hideFromPalette: showBroken,
+              //@ts-expect-error
               blockType: Scratch.BlockType.XML,
               xml: genLabelXML('THESE BLOCKS CAN CORRUPT YOUR\nPROJECT, USE THEM AT YOUR OWN\nRISK.'),
             },
@@ -137,7 +139,7 @@
               hideFromPalette: showBroken,
               opcode: 'exec_case_',
               blockType: Scratch.BlockType.COMMAND,
-              text: 'run case [DATA] and break: [DATA1]?',
+              text: 'run case [DATA]',
               arguments: {
                 DATA: {
                   type: Scratch.ArgumentType.STRING,
@@ -151,7 +153,7 @@
               hideFromPalette: showBroken,
               opcode: 'next_',
               blockType: Scratch.BlockType.COMMAND,
-              text: 'run next case and break: [DATA]?',
+              text: 'run next case',
               arguments: {
                 DATA: {
                   type: Scratch.ArgumentType.BOOLEAN,
@@ -169,10 +171,11 @@
         };
       }
 
-      brokenUpdate() { showBroken = !showBroken;
-                       brokenText = (!showBroken ? 'Hide Broken' : 'Show Broken');
-                       Scratch.vm.extensionManager.refreshBlocks();
-                     }
+      brokenUpdate() {  showBroken = !showBroken;
+                        brokenText = (!showBroken ? 'Hide Broken' : 'Show Broken');
+                        //@ts-expect-error
+                        Scratch.vm.extensionManager.refreshBlocks();
+                      }
 
       switch_({ DATA }, util) {
         const thread = util.thread;
@@ -182,6 +185,9 @@
         let self = getBlockByID(target, blockID);
         self.switchData = DATA;
         self.ranCase = false;
+        self.switchSkipAll = false;
+        self.runNext = false;
+        self.runIfCase = `_${DATA}`;
         setBlockByID(target, blockID, self);
 
         return 1;
@@ -193,10 +199,12 @@
         const blockID = thread.peekStack();
 
         let outer = getOuterBlockID(target, blockID);
-        if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
+        if (outer.opcode != '0znzwSwitchCase_switch_' || outer.switchSkipAll) return 0;
+
+        console.log(DATA, outer)
         
-        if (DATA == outer.switchData) {
-          outer.ranCase = true;
+        if (DATA == outer.switchData || outer.runNext || DATA == outer.runIfCase) {
+          if (outer.runNext) { outer.runNext = false } else outer.ranCase = true;
           setBlockByID(target, outer.id, outer);
           return 1;
         }
@@ -215,7 +223,7 @@
         if (self.next) return 0;
         if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
 
-        if (outer.ranCase) return 0;
+        if (outer.ranCase || outer.switchSkipAll) return 0;
         return 1;
       }
 
@@ -243,10 +251,11 @@
         let self = getBlockByID(target, blockID);
         let outer = getOuterBlockID(target, blockID);
 
-        if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
+        if (outer.opcode != '0znzwSwitch_switch_') return 0;
 
-        /* code here... */
-        if (args.DATA) { this.break_({}, util); return };
+        outer.runNext = true;
+        setBlockByID(target, outer.id, outer);
+        vm.runtime._pushThread(self.next, target, {stackClick:false})
       }
 
       exec_case_(args, util) {
@@ -260,7 +269,8 @@
         if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
 
         /* code here... */
-        if (args.DATA1) { this.break_({}, util); return };
+        outer.runIfCase = args.DATA;
+        setBlockByID(target, outer.id, outer);
       }
 
       break_(args, util) {
@@ -273,8 +283,8 @@
 
         if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
 
-        thread.stop = function() {alert('hmmm stop?, idk this does not work idk why.')};
-        thread.stop();//hmmmm?
+        outer.switchSkipAll = true;
+        setBlockByID(target, outer.id, outer);
       }
 
       continue_(args, util) {
@@ -291,5 +301,7 @@
       }
 
     }
+
+    //@ts-expect-error
     Scratch.extensions.register(new SwitchCaseExt());
   })(Scratch);}catch(err){alert(err)};
