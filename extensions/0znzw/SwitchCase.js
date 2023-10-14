@@ -50,7 +50,7 @@
       text = text.replaceAll('"', '&quot;');
       text = text.split('\n');
 
-      let gap = -20;//minimum gap is not 0?
+      let gap = 5;//minimum gap is not 0?
       for (let i = 0; i < text.length; i++) {
         let str = text[i];
         str = `<label text="${str}"/><sep gap="${gap}"/>`;
@@ -197,8 +197,6 @@
 
         let outer = getOuterBlockID(target, blockID);
         if (outer.opcode != '0znzwSwitchCase_switch_' || outer.switchSkipAll) return 0;
-
-        console.log(DATA, outer)
         
         if (DATA == outer.switchData || outer.runNext || DATA == outer.runIfCase) {
           if (outer.runNext) { outer.runNext = false } else outer.ranCase = true;
@@ -295,6 +293,7 @@
         if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
 
         /* code here... */
+        console.log(blockID, thread)//vm.runtime._stopThread(this.threads[i]);
       }
 
     }
