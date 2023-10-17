@@ -1,30 +1,11 @@
 /*
-* Switch-Case extension v1.3b by 0znzw (English Version)
+* Switch-Case extension v1.4b by 0znzw (English Version)
 * All code is by 0znzw || licensed under MIT license.
 * IF YOU USE THE SWITCH CASE CODE PLEASE PROVIDE CREDIT!!
 * Do not remove this comment
-*/try{
+*/
   (function(Scratch) {
     'use strict';
-
-    // sadly this function can error :( so if it does it just returns all black (this can break packaged projects if it does not return a color)
-    function getCategoryColor(category_id) {
-        try {
-        const bubble = document.querySelector(`.scratchCategoryId-${category_id} .scratchCategoryItemBubble`);  
-        const styles = window.getComputedStyle(bubble);
-        const backgroundColor = styles.backgroundColor;
-        const borderColor = styles.borderColor;
-        function rgbToHex(rgb) {
-            const match = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-            if (match) {
-                return "#" + match.slice(1).map(x => parseInt(x).toString(16).padStart(2, '0')).join('');
-            }
-            return rgb;
-        }
-        return {color1: rgbToHex(backgroundColor), color2: rgbToHex(borderColor)};}catch(err){
-            return {color1: '#000000', color2: '#000000', color3: '#000000'};
-        }
-    }
 
     function getBlockByID(target, id) {
           return(target.blocks._blocks[id]);
@@ -64,14 +45,32 @@
     const vm = Scratch.vm;
     let showBroken = true;
     let brokenText = 'Show Broken';
+    let extensionID = '0znzwSwitchCase';
+
+    /* eslint-disable */
+    let Colours;
+    try {
+      // @ts-ignore
+      Colours = ScratchBlocks.Colours;
+    } catch {
+      let ScratchBlocks = {Colours: {control:{
+        primary: '#FFAB19', secondary: '#EC9C13', tertiary: '#CF8B17'
+      }}};
+      Colours = ScratchBlocks.Colours;
+    }
+
+    let color1 = Colours.control.primary;
+    let color2 = Colours.control.secondary;
+    let color3 = Colours.control.tertiary;
+
+    /* eslint-enable */
 
     class SwitchCaseExt {
       getInfo() {
         return {
-          id: '0znzwSwitchCase',
+          id: extensionID,
           name: 'Switch Case',
-          color1: getCategoryColor('control').color1,
-          color2: getCategoryColor('control').color2,
+          color1, color2, color3,
           blocks: [
             {
               opcode: 'switch_',
@@ -98,12 +97,20 @@
               blockType: Scratch.BlockType.CONDITIONAL,
               text: 'default'
             },
+            '---',
             {
               opcode: 'break_',
               blockType: Scratch.BlockType.COMMAND,
               text: 'break',
               isTerminal: true
             },
+            {
+              opcode: 'continue_',
+              blockType: Scratch.BlockType.COMMAND,
+              text: 'continue',
+              isTerminal: true
+            },
+            '---',
             {
               opcode: 'next_',
               blockType: Scratch.BlockType.COMMAND,
@@ -140,13 +147,6 @@
             },
             {
               hideFromPalette: showBroken,
-              opcode: 'continue_',
-              blockType: Scratch.BlockType.COMMAND,
-              text: 'continue',
-              isTerminal: true
-            },
-            {
-              hideFromPalette: showBroken,
               opcode: 'lcv_case_',
               blockType: Scratch.BlockType.REPORTER,
               text: '[DATA]',
@@ -171,7 +171,7 @@
       brokenUpdate() {  showBroken = !showBroken;
                         brokenText = (!showBroken ? 'Hide Broken' : 'Show Broken');
                         //@ts-expect-error
-                        Scratch.vm.extensionManager.refreshBlocks();
+                        vm.extensionManager.refreshBlocks();
                       }
 
       switch_({ DATA }, util) {
@@ -185,6 +185,7 @@
         self.switchSkipAll = false;
         self.runNext = false;
         self.runIfCase = `_${DATA}`;
+        self.planOnRunning = 0;
         setBlockByID(target, blockID, self);
 
         return 1;
@@ -195,8 +196,8 @@
         const target = util.target;
         const blockID = thread.peekStack();
 
-        let outer = getOuterBlockID(target, blockID);
-        if (outer.opcode != '0znzwSwitchCase_switch_' || outer.switchSkipAll) return 0;
+        let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
+        if (outer.opcode != `${extensionID}_switch_` || outer.switchSkipAll) return 0;
         
         if (DATA == outer.switchData || outer.runNext || DATA == outer.runIfCase) {
           if (outer.runNext) { outer.runNext = false } else outer.ranCase = true;
@@ -213,10 +214,10 @@
         const blockID = thread.peekStack();
 
         let self = getBlockByID(target, blockID);
-        let outer = getOuterBlockID(target, blockID);
+        let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
 
         if (self.next) return 0;
-        if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
+        if (outer.opcode != `${extensionID}_switch_`) return 0;
 
         if (outer.ranCase || outer.switchSkipAll) return 0;
         return 1;
@@ -227,10 +228,8 @@
         const target = util.target;
         const blockID = thread.peekStack();
 
-        let self = getBlockByID(target, blockID);
-        let outer = getOuterBlockID(target, blockID);
-
-        if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
+        let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
+        if (outer.opcode != `${extensionID}_switch_`) return 0;
 
         switch(args.DATA) {
           case 0: return 0;
@@ -244,9 +243,9 @@
         const blockID = thread.peekStack();
 
         let self = getBlockByID(target, blockID);
-        let outer = getOuterBlockID(target, blockID);
+        let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
 
-        if (outer.opcode != '0znzwSwitch_switch_') return 0;
+        if (outer.opcode != `${extensionID}_switch_`) return 0;
 
         outer.runNext = true;
         setBlockByID(target, outer.id, outer);
@@ -258,12 +257,10 @@
         const target = util.target;
         const blockID = thread.peekStack();
 
-        let self = getBlockByID(target, blockID);
-        let outer = getOuterBlockID(target, blockID);
+        let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
 
-        if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
+        if (outer.opcode != `${extensionID}_switch_`) return 0;
 
-        /* code here... */
         outer.runIfCase = args.DATA;
         setBlockByID(target, outer.id, outer);
       }
@@ -273,10 +270,9 @@
         const target = util.target;
         const blockID = thread.peekStack();
 
-        let self = getBlockByID(target, blockID);
-        let outer = getOuterBlockID(target, blockID);
+        let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
 
-        if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
+        if (outer.opcode != `${extensionID}_switch_`) return 0;
 
         outer.switchSkipAll = true;
         setBlockByID(target, outer.id, outer);
@@ -288,16 +284,28 @@
         const blockID = thread.peekStack();
 
         let self = getBlockByID(target, blockID);
-        let outer = getOuterBlockID(target, blockID);
+        let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
 
-        if (outer.opcode != '0znzwSwitchCase_switch_') return 0;
+        if (outer.opcode != `${extensionID}_switch_`) return 0;
 
-        /* code here... */
-        console.log(blockID, thread)//vm.runtime._stopThread(this.threads[i]);
+        let block = self;
+        while (block.parent != null && block.opcode != `${extensionID}_case_`) {
+          block = getBlockByID(target, block.parent);
+        }
+        if (block.opcode != `${extensionID}_case_`) return 0;
+
+        vm.runtime._stopThread(thread);
+        let nextThread = vm.runtime._pushThread(block.next, target, {stackClick: true});
+
+        outer.planOnRunning += 1;
+        setBlockByID(target, outer.id, outer);
+        if (vm.runtime.isActiveThread(nextThread)) util.yield();
+
+        if (outer.next && outer.planOnRunning == 1) vm.runtime._pushThread(outer.next, target, {stackClick: true});
       }
 
     }
 
     //@ts-expect-error
     Scratch.extensions.register(new SwitchCaseExt());
-  })(Scratch);}catch(err){alert(err)};
+  })(Scratch);
