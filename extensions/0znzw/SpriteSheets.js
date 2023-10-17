@@ -46,7 +46,7 @@
                 color1: "#fcb103",
                 color2: "#db9a37",
                 color3: "#db8937",
-                blocks: [{
+                blocks: [{blockType: Scratch.BlockType.LABEL, text: 'WARNING: BITMAP ONLY!!'}, {
                     opcode: 'newSheet',
                     blockType: Scratch.BlockType.COMMAND,
                     text: 'create new spritesheet [name] from [img]',
@@ -100,7 +100,7 @@
                         },
 
                     }
-                }, {
+                }, '---', {
                     opcode: 'newWxH',
                     blockType: Scratch.BlockType.REPORTER,
                     text: 'new WxH: width [w] height [h]',
@@ -130,7 +130,7 @@
                         },
 
                     }
-                }, {
+                }, '---', {
                     opcode: 'cutSheet',
                     blockType: Scratch.BlockType.COMMAND,
                     text: 'cut sheet [name] with WxH [wxh] and CxR [cxr]',
@@ -147,7 +147,7 @@
                         },
 
                     }
-                }, {
+                }, '---', {
                     opcode: 'getSheetImg',
                     blockType: Scratch.BlockType.REPORTER,
                     text: 'image [imgIdx] of sheet [name]',
