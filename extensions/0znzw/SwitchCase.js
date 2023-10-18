@@ -98,16 +98,17 @@
               text: 'default'
             },
             '---',
+            /* :sob: why does it matter if I call it break or continue :( */
             {
               opcode: 'break_',
               blockType: Scratch.BlockType.COMMAND,
-              text: 'break',
+              text: 'exit switch',
               isTerminal: true
             },
             {
               opcode: 'continue_',
               blockType: Scratch.BlockType.COMMAND,
-              text: 'continue',
+              text: 'exit case',
               isTerminal: true
             },
             '---',
