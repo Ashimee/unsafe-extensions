@@ -1,5 +1,5 @@
 /*
-* Switch-Case extension v1.4.1b by 0znzw (English Version)
+* Switch-Case extension v1.4.3b by 0znzw (English Version)
 * All code is by 0znzw || licensed under MIT license.
 * IF YOU USE THE SWITCH CASE CODE PLEASE PROVIDE CREDIT!!
 * Do not remove this comment
@@ -8,11 +8,11 @@
   'use strict';
 
   function getBlockByID(target, id) {
-        return(target.blocks._blocks[id]);
+    return(target.blocks._blocks[id]);
   }
 
   function setBlockByID(target, id, JSON) {
-        target.blocks._blocks[id] = JSON;
+    target.blocks._blocks[id] = JSON;
   }
 
   function getOuterBlockID(target, startBlockID) {
@@ -34,6 +34,25 @@
   function PaletteCheck(thread) {
     if (isInPalette(thread)) { Scratch.vm.runtime.visualReport(thread.peekStack(), call); return call };
     return false;
+  }
+
+  function getOuterCblock(target, startId) {
+    let block = getBlockByID(target, startId);
+    let isC = false;
+    while (!isC && block.hasOwnProperty('parent') && block.parent !== null) {
+      block = getBlockByID(target, block.parent);
+      isC = (block.hasOwnProperty('inputs') && block.inputs.hasOwnProperty('SUBSTACK'));
+    }
+    return (isC ? block : null);
+  }
+
+  function getOuterCtillOpcode(target, startId, opcode) {
+    let currentC = getOuterCblock(target, startId);
+    while (currentC != null && currentC.opcode !== opcode) {
+      console.log(currentC);
+      currentC = getOuterCblock(target, currentC.id);
+    }
+    return currentC;
   }
 
   function genLabelXML(text) {
@@ -85,10 +104,13 @@
           {
             opcode: 'switch_',
             blockType: Scratch.BlockType.CONDITIONAL,
-            text: 'switch [DATA]',
+            text: 'switch [DATA] | be strict: [STRICT]',
             arguments: {
               DATA: {
                 type: Scratch.ArgumentType.STRING,
+              },
+              STRICT: {
+                type: Scratch.ArgumentType.BOOLEAN,
               }
             }
           },
@@ -188,7 +210,7 @@
                       vm.extensionManager.refreshBlocks();
                     }
 
-    switch_({ DATA }, util) {
+    switch_({ DATA, STRICT }, util) {
       const thread = util.thread;
       const target = util.target;
       const blockID = thread.peekStack();
@@ -202,6 +224,7 @@
       self.runNext = false;
       self.runIfCase = `_${DATA}`;
       self.planOnRunning = 0;
+      self.beStrict = STRICT;
       setBlockByID(target, blockID, self);
 
       return 1;
@@ -214,10 +237,12 @@
 
       if (PaletteCheck(thread)) return call;
 
-      let outer = getOuterBlockID(target, blockID);
-      if (outer.opcode != `${extensionID}_switch_` || outer.switchSkipAll) return 0;
+      let outer = getOuterCtillOpcode(target, blockID, `${extensionID}_switch_`);
+      if (outer == null || outer.switchSkipAll) return 0;
       
-      if (DATA == outer.switchData || outer.runNext || DATA == outer.runIfCase) {
+      let matchesData = ((outer.beStrict && DATA === outer.switchData) || (!outer.beStrict && DATA == outer.switchData));
+
+      if (matchesData || outer.runNext || DATA == outer.runIfCase) {
         if (outer.runNext) { outer.runNext = false } else outer.ranCase = true;
         setBlockByID(target, outer.id, outer);
         return 1;
@@ -234,12 +259,9 @@
       let self = getBlockByID(target, blockID);
 
       if (PaletteCheck(thread)) return call;
-      let outer = getOuterBlockID(target, blockID);
+      let outer = getOuterCtillOpcode(target, blockID, `${extensionID}_switch_`);
+      if (outer == null || self.next || (outer.ranCase || outer.switchSkipAll)) return 0;
 
-      if (self.next) return 0;
-      if (outer.opcode != `${extensionID}_switch_`) return 0;
-
-      if (outer.ranCase || outer.switchSkipAll) return 0;
       return 1;
     }
 
@@ -249,9 +271,9 @@
       const blockID = thread.peekStack();
 
       if (PaletteCheck(thread)) return call;
-      let outer = getOuterBlockID(target, blockID);
 
-      if (outer.opcode != `${extensionID}_switch_`) return 0;
+      let outer = getOuterCtillOpcode(target, blockID, `${extensionID}_switch_`);
+      if (outer == null) return 0;
 
       return outer.switchData;
 
@@ -284,9 +306,9 @@
       const blockID = thread.peekStack();
 
       if (PaletteCheck(thread)) return call;
-      let outer = getOuterBlockID(target, blockID);
 
-      if (outer.opcode != `${extensionID}_switch_`) return 0;
+      let outer = getOuterCtillOpcode(target, blockID, `${extensionID}_switch_`);
+      if (outer == null) return 0;
 
       outer.runIfCase = args.DATA;
       setBlockByID(target, outer.id, outer);
@@ -297,10 +319,10 @@
       const target = util.target;
       const blockID = thread.peekStack();
 
-      if (isInPalette(thread)) { alert('Dont run me in the palette :('); return 0; }
-      let outer = getOuterBlockID(target, blockID);
+      if (PaletteCheck(thread)) return call;
 
-      if (outer.opcode != `${extensionID}_switch_`) return 0;
+      let outer = getOuterCtillOpcode(target, blockID, `${extensionID}_switch_`);
+      if (outer == null) return 0;
 
       outer.switchSkipAll = true;
       setBlockByID(target, outer.id, outer);
@@ -313,10 +335,10 @@
 
       let self = getBlockByID(target, blockID);
 
-      if (isInPalette(thread)) { alert('Dont run me in the palette :('); return 0; }
-      let outer = getOuterBlockID(target, blockID);
+      if (PaletteCheck(thread)) return call;
 
-      if (outer.opcode != `${extensionID}_switch_`) return 0;
+      let outer = getOuterCtillOpcode(target, blockID, `${extensionID}_switch_`);
+      if (outer == null) return 0;
 
       let block = self;
       while (block.parent != null && block.opcode != `${extensionID}_case_`) {
