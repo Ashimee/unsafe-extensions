@@ -26,6 +26,16 @@
     return block;
   }
 
+  function isInPalette(thread) {
+    return !(Object.keys(thread.target.blocks._blocks).includes(thread.peekStack()));
+  }
+
+  let call = 'Dont run me in the palette :(';
+  function PaletteCheck(thread) {
+    if (isInPalette(thread)) { Scratch.vm.runtime.visualReport(thread.peekStack(), call); return call };
+    return false;
+  }
+
   function genLabelXML(text) {
     text = text.replaceAll('\\', '\\\\');
     text = text.replaceAll('"', '&quot;');
@@ -183,6 +193,8 @@
       const target = util.target;
       const blockID = thread.peekStack();
 
+      if (PaletteCheck(thread)) return call;
+
       let self = getBlockByID(target, blockID);
       self.switchData = DATA;
       self.ranCase = false;
@@ -200,7 +212,9 @@
       const target = util.target;
       const blockID = thread.peekStack();
 
-      let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :('); return 0; };
+      if (PaletteCheck(thread)) return call;
+
+      let outer = getOuterBlockID(target, blockID);
       if (outer.opcode != `${extensionID}_switch_` || outer.switchSkipAll) return 0;
       
       if (DATA == outer.switchData || outer.runNext || DATA == outer.runIfCase) {
@@ -218,7 +232,9 @@
       const blockID = thread.peekStack();
 
       let self = getBlockByID(target, blockID);
-      let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :('); return 0; };
+
+      if (PaletteCheck(thread)) return call;
+      let outer = getOuterBlockID(target, blockID);
 
       if (self.next) return 0;
       if (outer.opcode != `${extensionID}_switch_`) return 0;
@@ -232,7 +248,9 @@
       const target = util.target;
       const blockID = thread.peekStack();
 
-      let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
+      if (PaletteCheck(thread)) return call;
+      let outer = getOuterBlockID(target, blockID);
+
       if (outer.opcode != `${extensionID}_switch_`) return 0;
 
       return outer.switchData;
@@ -249,7 +267,9 @@
       const blockID = thread.peekStack();
 
       let self = getBlockByID(target, blockID);
-      let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
+
+      if (PaletteCheck(thread)) return call;
+      let outer = getOuterBlockID(target, blockID);
 
       if (outer.opcode != `${extensionID}_switch_`) return 0;
 
@@ -263,7 +283,8 @@
       const target = util.target;
       const blockID = thread.peekStack();
 
-      let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
+      if (PaletteCheck(thread)) return call;
+      let outer = getOuterBlockID(target, blockID);
 
       if (outer.opcode != `${extensionID}_switch_`) return 0;
 
@@ -276,7 +297,8 @@
       const target = util.target;
       const blockID = thread.peekStack();
 
-      let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
+      if (isInPalette(thread)) { alert('Dont run me in the palette :('); return 0; }
+      let outer = getOuterBlockID(target, blockID);
 
       if (outer.opcode != `${extensionID}_switch_`) return 0;
 
@@ -290,7 +312,9 @@
       const blockID = thread.peekStack();
 
       let self = getBlockByID(target, blockID);
-      let outer; try { outer = getOuterBlockID(target, blockID) } catch(err) { console.error(err); outer = {opcode: `$invalidBlock_${extensionID}`}; alert('Dont run me in the palette :(') };
+
+      if (isInPalette(thread)) { alert('Dont run me in the palette :('); return 0; }
+      let outer = getOuterBlockID(target, blockID);
 
       if (outer.opcode != `${extensionID}_switch_`) return 0;
 
