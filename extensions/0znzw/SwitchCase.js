@@ -49,7 +49,6 @@
   function getOuterCtillOpcode(target, startId, opcode) {
     let currentC = getOuterCblock(target, startId);
     while (currentC != null && currentC.opcode !== opcode) {
-      console.log(currentC);
       currentC = getOuterCblock(target, currentC.id);
     }
     return currentC;
