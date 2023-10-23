@@ -1,6 +1,7 @@
 // Name: Sprite Sheets
 // ID: 0znzwSpriteSheetsJS
 // Description: Handle Sprite Sheets! (fancy yes yes /j)
+
 /**
  * Sprite-Sheets extension v1.0 by 0znzw (English Version)
  * Majority code is by 0znzw || licensed under MIT license.
@@ -18,7 +19,7 @@
     const clamp = (a, b, c) => (c >= b ? b : (c <= a ? a : c));
 
 
-    function cutImageUp(image, numColsToCut, numRowsToCut, widthOfOnePiece, heightOfOnePiece) {
+    function cutImageUp(image, numColsToCut, numRowsToCut, widthOfOnePiece, heightOfOnePiece, shiftX, shiftY) {
         let imagePieces = [];
         for (var x = 0; x < numColsToCut; ++x) {
             for (var y = 0; y < numRowsToCut; ++y) {
@@ -26,7 +27,7 @@
                 canvas.width = widthOfOnePiece;
                 canvas.height = heightOfOnePiece;
                 var context = canvas.getContext('2d');
-                context.drawImage(image, x * widthOfOnePiece, y * heightOfOnePiece, widthOfOnePiece, heightOfOnePiece, 0, 0, canvas.width, canvas.height);
+                context.drawImage(image, x * widthOfOnePiece, y * heightOfOnePiece, widthOfOnePiece, heightOfOnePiece, shiftX, shiftY, canvas.width, canvas.height);
                 imagePieces.push(canvas.toDataURL());
             }
         }
@@ -100,7 +101,39 @@
                         },
 
                     }
-                }, '---', {
+                }, '---',
+                {
+                    opcode: 'createSettings',
+                    blockType: Scratch.BlockType.REPORTER,
+                    text: 'create setting with [s1], [s2], [s3]',
+                    arguments: {
+                        s1: {
+                            type: NULL
+                        },
+                        s2: {
+                            type: NULL
+                        },
+                        s3: {
+                            type: NULL
+                        },
+                    }
+                },
+                {
+                    opcode: 'newShift',
+                    blockType: Scratch.BlockType.REPORTER,
+                    text: 'new Shifter: shift-X [sx] shift-y [sy]',
+                    arguments: {
+                        sx: {
+                            type: Scratch.ArgumentType.NUMBER,
+                            defaultValue: 0
+                        },
+                        sy: {
+                            type: Scratch.ArgumentType.NUMBER,
+                            defaultValue: 0
+                        },
+
+                    }
+                },  {
                     opcode: 'newWxH',
                     blockType: Scratch.BlockType.REPORTER,
                     text: 'new WxH: width [w] height [h]',
@@ -133,16 +166,13 @@
                 }, '---', {
                     opcode: 'cutSheet',
                     blockType: Scratch.BlockType.COMMAND,
-                    text: 'cut sheet [name] with WxH [wxh] and CxR [cxr]',
+                    text: 'cut sheet [name] with settings [set]',
                     arguments: {
                         name: {
                             type: Scratch.ArgumentType.STRING,
                             defaultValue: 'sheet1'
                         },
-                        wxh: {
-                            type: NULL
-                        },
-                        cxr: {
+                        set: {
                             type: NULL
                         },
 
@@ -186,7 +216,7 @@
                     },
                     sheetOptions: {
                         acceptReporters: true,
-                        items: ['width', 'height', 'columns', 'rows', 'image count', 'json']
+                        items: ['width', 'height', 'columns', 'rows', 'shift-x', 'shift-y', 'image count', 'json']
                     }
                 }
             };
@@ -203,6 +233,33 @@
                 value: ''
             }];
         }
+        _isJSON(data) {
+            try { data = JSON.parse(data) } catch { return false };
+            //saves parsing time next time the object is used
+            return data;
+        }
+        _joinObjects(obj1, obj2) {
+            let obj3 = {};
+            let obj1k = Object.keys(obj1),
+                obj2k = Object.keys(obj2);
+            for (let i = 0; i < obj1k.length; i++) {
+                let key = obj1k[i];
+                obj3[key] = obj1[key];
+            }
+            for (let i = 0; i < obj2k.length; i++) {
+                let key = obj2k[i];
+                obj3[key] = obj2[key];
+            }
+            return obj3;
+        }
+        _createMissingProps(obj, props, defaultValue) {
+            for (let i = 0; i < props.length; i++) {
+                let prop = props[i];
+                if (obj.hasOwnProperty(prop)) continue;
+                obj[prop] = defaultValue;
+            }
+            return obj;
+        }
         // Generation of settings for other blocks
         newClip(args, util) {
             let sx = Scratch.Cast.toNumber(args.sx),
@@ -214,6 +271,29 @@
                 sy,
                 ex,
                 ey
+            });
+        }
+        createSettings(args, util) {
+            let s1 = (this._isJSON(Scratch.Cast.toString(args.s1))),
+                s2 = (this._isJSON(Scratch.Cast.toString(args.s2))),
+                s3 = (this._isJSON(Scratch.Cast.toString(args.s3)))
+            if (typeof s1 != 'object') s1 = {};
+            if (typeof s2 != 'object') s2 = {};
+            if (typeof s3 != 'object') s3 = {};
+
+            let obj = this._joinObjects(s1, s2);
+            obj = this._joinObjects(obj, s3);
+
+            obj = this._createMissingProps(obj, ['width', 'height', 'cols', 'rows', 'shiftX', 'shiftY'], 0);
+
+            return JSON.stringify(obj);
+        }
+        newShift(args, util) {
+            let shiftX = Scratch.Cast.toNumber(args.sx),
+                shiftY = Scratch.Cast.toNumber(args.sy);
+            return JSON.stringify({
+                shiftX,
+                shiftY
             });
         }
         newWxH(args, util) {
@@ -233,7 +313,6 @@
             });
         }
         //Sheet setup
-
         newSheet(args, util) {
             let sheetname = Scratch.Cast.toString(args.name);
             this.spritesheets[sheetname] = {
@@ -252,24 +331,25 @@
             let sheetname = Scratch.Cast.toString(args.name),
                 spritesheets = this.spritesheets,
                 sheet = spritesheets[sheetname],
-                WxH = JSON.parse(args.wxh),
-                CxR = JSON.parse(args.cxr);
+                settings = this._isJSON(Scratch.Cast.toString(args.set))
+            if (settings==false) { return 'Invalid Settings.' };
             let img = new Image();
             img.onload = function() {
-                sheet.images = cutImageUp(img, CxR.cols, CxR.rows, WxH.width, WxH.height);
+                sheet.images = cutImageUp(img, settings.cols, settings.rows, settings.width, settings.height, settings.shiftX, settings.shiftY);
             };
             img.src = sheet.imgData;
 
-            sheet.width = WxH.width;
-            sheet.height = WxH.height;
-            sheet.cols = CxR.cols;
-            sheet.rows = CxR.rows;
+            sheet.width = settings.width;
+            sheet.height = settings.height;
+            sheet.cols = settings.cols;
+            sheet.rows = settings.rows;
+            sheet.shiftX = settings.shiftX;
+            sheet.shiftY = settings.shiftY;
 
             spritesheets[sheetname] = sheet;
             this.spritesheets = spritesheets;
         }
         //Sheet properties
-
         getSheetData(args, util) {
             let sheetname = Scratch.Cast.toString(args.name),
                 sheet = this.spritesheets[sheetname],
@@ -283,10 +363,16 @@
                     return (sheet.cols || this.unCutERR);
                 case 'rows':
                     return (sheet.rows || this.unCutERR);
+                case 'shift-x':
+                    return (sheet.shiftX || this.unCutERR);
+                case 'shift-y':
+                    return (sheet.shiftY || this.unCutERR);
                 case 'image count':
                     return sheet.images.length;
                 case 'json':
                     return JSON.stringify(sheet);
+                default:
+                    return '';
             }
         }
         getSheetImg(args, util) {
@@ -298,5 +384,6 @@
             return this.unCutERR;
         }
     }
+    //@ts-expect-error
     Scratch.extensions.register(new extension());
 })(Scratch);
