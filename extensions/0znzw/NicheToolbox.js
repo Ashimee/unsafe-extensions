@@ -1,5 +1,5 @@
 /**
- * Niche Toolbox extension v1.4 by 0znzw (English Version)
+ * Niche Toolbox extension v1.5 by 0znzw (English Version)
  * Majority code is by 0znzw || licensed under MIT license.
  * Do not remove this comment
  */
@@ -199,6 +199,22 @@
                     arguments: {
                         LAYER_ORDER: { defaultValue: this.LAYER_TYPES, type: Scratch.ArgumentType.STRING }
                     }
+                }, {
+                    opcode: 'SGR_isPlayerOnly',
+                    blockType: Scratch.BlockType.BOOLEAN,
+                    text: 'user is not in the editor?'
+                }, {
+                    opcode: 'SGR_isFullscreen',
+                    blockType: Scratch.BlockType.BOOLEAN,
+                    text: 'is fullscreen?'
+                }, {
+                    opcode: 'SGR_isEmbedded',
+                    blockType: Scratch.BlockType.BOOLEAN,
+                    text: 'is embedded?'
+                }, {
+                    opcode: 'SGR_hasEverEnteredEditor',
+                    blockType: Scratch.BlockType.BOOLEAN,
+                    text: 'has the user ever opened the editor?'
                 }], menus: {
                     /* Dynamic Menus (sounds list etc...) */
                     soundsMenu: {
@@ -296,6 +312,11 @@
             return `#${r}${g}${b}${a}`;
         }
 
+        _getSGredux() {
+            //@ts-expect-error
+            return ReduxStore.getState().scratchGui;
+        }
+
         /* Actual NicheToolbox Blocks */
         NT_is_BuiltInExt_or_ReservedName(args) {
             let STR = Cast.toString(args.STR);
@@ -319,6 +340,20 @@
             //@ts-expect-error
             CustomLayers = LAYER_ORDER;
             updateLayerOrder();
+        }
+
+        /* ScratchGUIredux.js */
+        SGR_isEmbedded() {
+            return this._getSGredux().mode.isEmbedded;
+        }
+        SGR_isFullscreen() {
+            return this._getSGredux().mode.isFullScreen;
+        }
+        SGR_isPlayerOnly() {
+            return this._getSGredux().mode.isPlayerOnly;
+        }
+        SGR_hasEverEnteredEditor() {
+            return this._getSGredux().mode.hasEverEnteredEditor;
         }
 
         /* shovelutils+.js */
