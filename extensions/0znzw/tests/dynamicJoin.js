@@ -16,8 +16,7 @@
     const vm = Scratch.vm;
 
     // @ts-expect-error
-    if (!ReduxStore.getState().scratchGui.mode.isPlayerOnly) alert('Hey, sorry for this but if you have loaded a project you saved or are just doing this then read below:\nDont delete the project-store sprite, but if you load up your project again there will be a duplicate that you can delete, but be warned if you delete the wrong one it will break.');
-
+    try { if (!ReduxStore.getState().scratchGui.mode.isPlayerOnly) alert('Hey, sorry for this but if you have loaded a project you saved or are just doing this then read below:\nDont delete the project-store sprite, but if you load up your project again there will be a duplicate that you can delete, but be warned if you delete the wrong one it will break.'); } catch { console.log('Project is most likely packaged.') };
     let dynamicStorage, joins, joinsMax, hasJoin, joinBlocks;
     class extension {
         getInfo() {
