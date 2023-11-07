@@ -1,5 +1,5 @@
 /**
- * Niche Toolbox extension v1.5 by 0znzw (English Version)
+ * Niche Toolbox extension v1.6 by 0znzw (English Version)
  * Majority code is by 0znzw || licensed under MIT license.
  * Do not remove this comment
  */
@@ -8,11 +8,13 @@
  * Many thanks to:
  *   SharkPool for helping with bug test+fixing, and for color creating the icon.
  *   ObviousAlexC for the Scratch To Canvas Cords function.
+ *   IonSlayer for the print block idea.
  *
  * Profiles:
  *   0znzw:        https://scratch.mit.edu/users/0znzw/
  *   SharkPool:    https://www.youtube.com/@SharkPool_SP/
  *   ObviousAlexC: https://scratch.mit.edu/users/pinksheep2917/
+ *   IonSlayer:    https://scratch.mit.edu/users/ionslayer
  */
     (function (Scratch) {
     'use strict';
@@ -215,6 +217,13 @@
                     opcode: 'SGR_hasEverEnteredEditor',
                     blockType: Scratch.BlockType.BOOLEAN,
                     text: 'has the user ever opened the editor?'
+                }, {
+                    blockType: Scratch.BlockType.COMMAND,
+                    opcode: 'ISP_print_',
+                    text: 'attempt to print image from url: [URI]',
+                    arguments: {
+                        URI: { type: Scratch.ArgumentType.STRING, defaultValue: '' }
+                    }
                 }], menus: {
                     /* Dynamic Menus (sounds list etc...) */
                     soundsMenu: {
@@ -441,6 +450,15 @@
                     TEXT = TEXT.padEnd(LEN, CHAR);
             }
             return TEXT;
+        }
+
+        /* IonSlayer Print Idea */
+        ISP_print_(args) {
+            let url = Scratch.Cast.toString(args.URI);
+            var test = document.createElement('iframe');
+            test.srcdoc=`<html><head></head><body><<img src="${url}"></img><script>setTimeout(function(){window.print()}, 500);</script></body></html>`;
+            if (test.parentNode == null) document.body.appendChild(test);
+            setTimeout(function(){test.remove()}, 750);
         }
     }
     Scratch.extensions.register(new NicheToolbox());
