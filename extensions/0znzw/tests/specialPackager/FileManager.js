@@ -23,7 +23,7 @@
             {
               blockType: Scratch.BlockType.BOOLEAN,
               opcode: 'can_use_api',
-              text: 'packaged-file api avalible?'
+              text: 'packaged-file api available?'
             },
             {
               blockType: Scratch.BlockType.LABEL,
@@ -332,6 +332,7 @@
         try { fileSystemAPI && 1 } catch { return false };
         try { fileSystemPromiseAPI && 1 } catch { return false };
         try { pathAPI && 1 } catch { return false };
+        try { shellAPI && 1 } catch { return false };
         try { CD && 1 } catch { return false };
         return true;
       }
@@ -532,6 +533,11 @@
         }
       }
       /* end attributes section */
+      /* misc */
+      beep() {
+        shellAPI.beep();
+      }
+      /* end misc section */
     }
     Scratch.extensions.register(new fileReader());
   })(Scratch);
