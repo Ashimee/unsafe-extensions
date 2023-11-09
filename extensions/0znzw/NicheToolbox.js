@@ -34,10 +34,7 @@
     let CustomLayers = [];
 
     //@ts-expect-error
-    if (vm.runtime.ext_scratch3_motion.getPrimitives().hasOwnProperty('motion_movebacksteps')) {
-        /* fukity fuck off */
-        throw new Error('Niche-Toolbox must be run unsandboxed');
-    }
+    if (vm.runtime.ext_scratch3_motion.getPrimitives().hasOwnProperty('motion_movebacksteps')) {/* fukity fuck off */throw new Error('Niche-Toolbox must be run unsandboxed');}
 
 
     //provide me w/ credit if used.
@@ -89,6 +86,8 @@
             this.DEFAULT_CATEGORYS = ['motion', 'looks', 'sound', 'events', 'sensing', 'operators', 'variables', 'myBlocks'];
             this.PU_SEND_MENU = ['start', 'end'];
             this.LAYER_TYPES = '["backdrop", "video", "pen", "sprite"]';
+            //@ts-expect-error
+            if (vm.runtime.ext_scratch3_motion.getPrimitives().hasOwnProperty('motion_movebacksteps')) {throw new Error('Niche-Toolbox must be run unsandboxed');}
         }
         getInfo() {
             return {
