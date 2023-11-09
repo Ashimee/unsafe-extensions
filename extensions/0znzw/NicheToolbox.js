@@ -389,7 +389,7 @@
             if (!target || this.RESERVED_NAMES.includes(SPRITE.toLowerCase())) {
                 return;
             }
-            target.deleteSound(this._getSoundIndex(SNDNAME));
+            target.deleteSound(this._getSoundIndex(SNDNAME, util));
         }
 
         /* colorAtXY.js */
