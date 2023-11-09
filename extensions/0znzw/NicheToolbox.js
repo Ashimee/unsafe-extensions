@@ -21,6 +21,11 @@
     if (!Scratch.extensions.unsandboxed) {
         throw new Error('Niche-Toolbox must be run unsandboxed');
     }
+    //@ts-expect-error
+    if (vm.runtime.ext_scratch3_motion.getPrimitives().hasOwnProperty('motion_movebacksteps')) {
+        /* fukity fuck off PM */
+        throw new Error('Niche-Toolbox must be run unsandboxed');
+    }
     /* TYPES + CASTING */
     const BlockType = Scratch.BlockType;
     const ArgumentType = Scratch.ArgumentType;
