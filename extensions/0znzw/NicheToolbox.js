@@ -361,16 +361,16 @@
 
         /* ScratchGUIredux.js */
         SGR_isEmbedded() {
-            return this._getSGredux().mode.isEmbedded;
+            try { return this._getSGredux().mode.isEmbedded; } catch { return false };
         }
         SGR_isFullscreen() {
-            return this._getSGredux().mode.isFullScreen;
+            try { return this._getSGredux().mode.isFullScreen; } catch { return false };
         }
         SGR_isPlayerOnly() {
-            return this._getSGredux().mode.isPlayerOnly;
+            try { return this._getSGredux().mode.isPlayerOnly; } catch { return false };
         }
         SGR_hasEverEnteredEditor() {
-            return this._getSGredux().mode.hasEverEnteredEditor;
+            try { return this._getSGredux().mode.hasEverEnteredEditor; } catch { return false };
         }
 
         /* shovelutils+.js */
