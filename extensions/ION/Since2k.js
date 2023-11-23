@@ -84,6 +84,7 @@ class Since2000 {
             blockType: 'reporter',
             text: 'millenniums since 2000',
           },
+          /* New block */
           {
             opcode: 'Since2000',
             blockType: 'reporter',
