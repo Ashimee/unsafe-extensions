@@ -1,3 +1,4 @@
+(function(Scratch){
 //Made by ION, Based on improving scratches days since 2000 block.
 class Since2000 {
     constructor() {}
@@ -5,7 +6,7 @@ class Since2000 {
     getInfo() {
       return {
         id: 'since2000',
-        name: '_ Since 2000',
+        name: 'Since 2000',
         color1: '#15b9a4',
         color2: '#0f80dd',
         blocks: [
@@ -15,6 +16,7 @@ class Since2000 {
             text: 'milliseconds since 2000',
           },
           {
+            hideFromPalette: true,
             opcode: 'microsecondsSince2000',
             blockType: 'reporter',
             text: 'microseconds since 2000',
@@ -75,6 +77,7 @@ class Since2000 {
   
     millisecondsSince2000() {
       const now = new Date();
+      //@ts-ignore
       const since2000 = now - new Date('2000-01-01');
       return since2000;
     }
@@ -98,6 +101,7 @@ class Since2000 {
     daysSince2000() {
       const now = new Date();
       const startDate = new Date('2000-01-01');
+      //@ts-ignore
       const days = (now - startDate) / (1000 * 60 * 60 * 24);
       return Math.floor(days);
     }
@@ -135,5 +139,6 @@ class Since2000 {
       return Math.floor(this.yearsSince2000() / 1000);
     }
   }
-  
+  //@ts-ignore
   Scratch.extensions.register(new Since2000());
+})(Scratch);
