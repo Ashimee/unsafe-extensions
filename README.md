@@ -1,4 +1,6 @@
 # THIS IS CLOSED, PLEASE SWITCH TO THE NEW REPO
+https://surv.is-a.dev/survs-gallery/
+https://github.com/SurvExE1Pc/survs-gallery
 
 # Unofficial gallery.
 
