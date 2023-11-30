@@ -1,3 +1,5 @@
+# THIS IS CLOSED, PLEASE SWITCH TO THE NEW REPO
+
 # Unofficial gallery.
 
 For extensions that cant get on the official gallery.
